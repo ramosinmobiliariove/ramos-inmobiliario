@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Panel | Ramos Inmobiliario</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fbfbfb; 
+            color: #292524;
+        }
+        .font-serif-title { font-family: 'Playfair Display', serif; }
+        .bg-marble-subtle {
+            background-color: #ffffff;
+            background-image: radial-gradient(#f0edea 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .section-header { background-color: #b58371; color: white; padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#b58371] selection:text-white flex flex-col min-h-screen">
+
+    <!-- Topbar Fina, Delicada y Minimalista -->
+    <div class="bg-[#1c1917] text-stone-300 text-[10px] tracking-[0.2em] uppercase py-2 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+            <div class="flex items-center space-x-6 font-light">
+                <span><i class="fas fa-phone-alt text-[#b58371] mr-2"></i> +58 414 2471765</span>
+                <span><i class="fas fa-envelope text-[#b58371] mr-2"></i> ramosinmobiiario.ve@gmail.com</span>
+            </div>
+            <div class="flex items-center space-x-6 font-light">
+                <span><i class="fas fa-location-dot text-[#b58371] mr-2"></i> Caracas, Venezuela</span>
+                <a href="https://wa.me/584142471765" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition"><i class="fab fa-whatsapp text-sm"></i> Soporte VIP</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Principal Elegante -->
+    <nav class="bg-marble-subtle sticky top-0 z-50 border-b border-stone-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center group py-1">
+                    <img src="logo.jpg" alt="Ramos Inmobiliario" class="h-16 w-auto object-contain transition duration-300 group-hover:scale-105 rounded-md shadow-sm border border-stone-100">
+                </a>
+
+                <!-- Menú Central -->
+                <div class="hidden md:flex items-center space-x-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-600">
+                    <a href="index.html" class="hover:text-[#b58371] transition py-1">Inicio</a>
+                    <a href="index.html#propiedades" class="hover:text-[#b58371] transition py-1">Propiedades</a>
+                    <a href="index.html#nosotros" class="hover:text-[#b58371] transition py-1">Nosotros</a>
+                    <a href="index.html#contacto" class="hover:text-[#b58371] transition py-1">Contacto</a>
+                </div>
+
+                <!-- Botón de Acción Estilizado -->
+                <div>
+                    <a href="https://wa.me/584142471765?text=Hola,%20deseo%20atención%20inmobiliaria%20personalizada" target="_blank" class="bg-[#b58371] hover:bg-[#a37260] text-white text-[11px] tracking-[0.15em] uppercase font-medium px-5 py-2.5 rounded-full shadow-[0_4px_20px_rgba(181,131,113,0.3)] transition duration-300 flex items-center space-x-2">
+                        <i class="fab fa-whatsapp text-sm"></i>
+                        <span>Atención Privada</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= PANTALLA DE LOGIN ================= -->
+    <div id="login-overlay" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 text-center space-y-6">
+            <div>
+                <span class="text-[10px] bg-[#b58371] text-white px-3 py-1 rounded-full uppercase tracking-widest font-bold">Seguridad CRM</span>
+                <h2 class="font-serif-title text-2xl font-bold text-slate-900 mt-3">Ramos Inmobiliario</h2>
+                <p class="text-xs text-slate-500 mt-1">Ingresa tus credenciales para acceder al panel de control.</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); validarLogin();" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Usuario</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fas fa-user text-xs"></i></span>
+                        <input type="text" id="login-user" placeholder="Ej. admin" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Contraseña</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fas fa-lock text-xs"></i></span>
+                        <input type="password" id="login-pass" placeholder="••••••••" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-1">
+                    <button type="button" onclick="abrirModalRecuperar()" class="text-[11px] text-[#b58371] hover:underline font-semibold">
+                        ¿Olvidaste tu contraseña?
+                    </button>
+                </div>
+
+                <p id="login-error" class="text-red-500 text-[11px] font-semibold text-center hidden">Usuario o contraseña incorrectos.</p>
+
+                <button type="submit" class="w-full bg-[#b58371] hover:bg-[#a37260] text-white text-xs font-semibold tracking-[0.15em] uppercase py-3.5 rounded-xl shadow-md transition">
+                    Ingresar al Panel
+                </button>
+            </form>
+            <div class="pt-2">
+                <a href="index.html" class="text-xs text-slate-400 hover:text-slate-600 transition">← Volver al sitio web principal</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL DE RECUPERACIÓN DE CONTRASEÑA ================= -->
+    <div id="modal-recuperar" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
+            <div class="w-12 h-12 bg-amber-50 text-[#b58371] rounded-full flex items-center justify-center mx-auto text-lg">
+                <i class="fas fa-key"></i>
+            </div>
+            <h3 class="font-serif-title font-bold text-xl text-slate-900">Recuperar Contraseña</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Ingresa tu correo registrado y te enviaremos tus datos de acceso directamente a tu bandeja.</p>
+            
+            <div class="text-left">
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Correo Electrónico</label>
+                <input type="email" id="correo-recuperacion" placeholder="tu-correo@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+            </div>
+            
+            <div id="mensaje-recuperacion" class="text-xs font-semibold hidden text-left p-2 rounded-lg"></div>
+
+            <div class="flex space-x-2 pt-2">
+                <button type="button" onclick="cerrarModalRecuperar()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl transition">
+                    Cancelar
+                </button>
+                <button type="button" onclick="enviarRecuperacion()" id="btn-enviar-recu" class="flex-1 bg-[#b58371] hover:bg-[#a37260] text-white text-xs font-bold py-3 rounded-xl transition">
+                    Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PANEL DE ADMINISTRACIÓN ================= -->
+    <div id="admin-app" class="flex flex-col flex-1 hidden">
+        <!-- Sub-barra superior del CRM -->
+        <div class="bg-slate-900 text-white border-b border-slate-800 sticky top-20 z-40 shadow-md">
+            <div class="max-w-7xl mx-auto px-6 h-12 flex justify-between items-center text-xs">
+                <div class="flex items-center space-x-3">
+                    <span class="font-serif-title font-bold text-sm tracking-wide text-amber-200">Panel de Control CRM</span>
+                    <span class="text-[10px] bg-[#b58371] text-white px-2.5 py-0.5 rounded-full uppercase tracking-widest font-bold">Activo</span>
+                </div>
+                <div class="flex items-center space-x-6 font-medium">
+                    <a href="index.html" target="_blank" class="text-slate-300 hover:text-white transition flex items-center space-x-1">
+                        <i class="fas fa-external-link-alt text-[10px]"></i>
+                        <span>Ver Sitio Web</span>
+                    </a>
+                    <button onclick="cerrarSesion()" class="text-red-400 hover:text-red-300 transition flex items-center space-x-1.5 font-bold">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Salir</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <aside class="lg:col-span-3 space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm text-center">
+                    <div class="w-16 h-16 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-700 font-bold text-xl font-serif-title">
+                        ER
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-sm">Edwin Ramos</h3>
+                    <p class="text-[11px] text-slate-500 font-medium mb-4">Administrador Principal</p>
+                    
+                    <div class="pt-4 border-t border-slate-100 flex justify-between text-xs text-slate-600">
+                        <span>Estado:</span>
+                        <span class="text-emerald-600 font-bold flex items-center"><i class="fas fa-circle text-[7px] mr-1.5"></i> Sesión Segura</span>
+                    </div>
+                </div>
+
+                <nav class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden text-xs">
+                    <button onclick="cambiarSeccion('listado')" id="btn-menu-listado" class="w-full text-left px-5 py-3.5 font-bold flex items-center space-x-3 bg-slate-900 text-white transition">
+                        <i class="fas fa-building text-sm"></i>
+                        <span>Inmuebles Publicados</span>
+                    </button>
+                    <button onclick="cambiarSeccion('formulario'); resetearFormulario();" id="btn-menu-formulario" class="w-full text-left px-5 py-3.5 font-semibold text-slate-600 hover:bg-slate-50 flex items-center space-x-3 border-t border-slate-100 transition">
+                        <i class="fas fa-plus-circle text-sm text-[#b58371]"></i>
+                        <span>Cargar Nuevo Inmueble</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <main class="lg:col-span-9 space-y-6">
+
+                <!-- SECCIÓN 1: TABLA Y LISTADO -->
+                <section id="seccion-listado" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Inmuebles Totales</span>
+                            <p class="text-2xl font-bold text-slate-900" id="stat-total">0</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">En Venta</span>
+                            <p class="text-2xl font-bold text-[#b58371]" id="stat-venta">0</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">En Alquiler</span>
+                            <p class="text-2xl font-bold text-slate-700" id="stat-alquiler">0</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <h2 class="font-serif-title font-bold text-lg text-slate-900">Lista de Inmuebles</h2>
+                                <p class="text-xs text-slate-500">Gestiona, edita o elimina tus publicaciones activas.</p>
+                            </div>
+                            <div>
+                                <input type="text" id="buscar-tabla" placeholder="Buscar por código o título..." onkeyup="filtrarTablaAdmin()" class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:border-[#b58371] w-full sm:w-64">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-100 font-bold text-[10px]">
+                                    <tr>
+                                        <th class="p-4">Imagen</th>
+                                        <th class="p-4">Código / Título</th>
+                                        <th class="p-4">Operación / Tipo</th>
+                                        <th class="p-4">Precio</th>
+                                        <th class="p-4 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-inmuebles-body" class="divide-y divide-slate-100 text-slate-700">
+                                    <tr>
+                                        <td colspan="5" class="p-8 text-center text-slate-400">Cargando propiedades...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECCIÓN 2: FORMULARIO COMPLETO EXTENDIDO -->
+                <section id="seccion-formulario" class="space-y-6 hidden">
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                        <div class="bg-[#b58371] text-white px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-edit text-sm"></i>
+                                <h2 class="font-bold text-xs uppercase tracking-widest" id="form-title-label">Cargar Nuevo Inmueble</h2>
+                            </div>
+                            <button type="button" onclick="cambiarSeccion('listado')" class="text-white text-xs hover:underline uppercase tracking-wider">
+                                <i class="fas fa-arrow-left mr-1"></i> Volver a la lista
+                            </button>
+                        </div>
+
+                        <form id="property-form" class="p-6 space-y-8" onsubmit="event.preventDefault(); guardarInmueble();">
+                            
+                            <!-- DATOS BÁSICOS -->
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Código / ID *</label>
+                                        <input type="text" id="id" placeholder="Se genera al guardar..." class="w-full bg-slate-100 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none cursor-not-allowed" readonly>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Título inmueble *</label>
+                                        <input type="text" id="titulo" placeholder="Ej. Apartamento en Venta en el Rosal" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Tipo de inmueble *</label>
+                                        <select id="tipo" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="" disabled selected>Seleccionar</option>
+                                            <option value="Anexo">Anexo</option>
+                                            <option value="Apartamento">Apartamento</option>
+                                            <option value="Casa">Casa</option>
+                                            <option value="Cava Refrigeradora">Cava Refrigeradora</option>
+                                            <option value="Club Campestre">Club Campestre</option>
+                                            <option value="Comercial">Comercial</option>
+                                            <option value="Consultorio Medico">Consultorio Médico</option>
+                                            <option value="Edificio">Edificio</option>
+                                            <option value="Estacionamiento">Estacionamiento</option>
+                                            <option value="Galpón">Galpón</option>
+                                            <option value="Industrial">Industrial</option>
+                                            <option value="Local Comercial">Local Comercial</option>
+                                            <option value="Negocios y Empresas">Negocios y Empresas</option>
+                                            <option value="Oficina">Oficina</option>
+                                            <option value="Posada">Posada</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Tipo de negocio *</label>
+                                        <select id="negocio" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="" disabled selected>Seleccionar</option>
+                                            <option value="Venta">Venta</option>
+                                            <option value="Alquiler">Alquiler</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Precio de Venta (si aplica)</label>
+                                        <input type="text" id="precio" placeholder="Ej. $ 0,000,000" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Precio de Alquiler (si aplica)</label>
+                                        <input type="text" id="precio_alquiler" placeholder="Ej. $ 0,000" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Condominio</label>
+                                        <input type="text" id="condominio" placeholder="Ej. $ 0" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Año Construcción</label>
+                                        <input type="text" id="ano_construccion" placeholder="Ej. 2026" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Dormitorio(s)</label>
+                                        <select id="hab" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="0">Cualquiera</option>
+                                            <option value="1">1+</option>
+                                            <option value="2">2+</option>
+                                            <option value="3">3+</option>
+                                            <option value="4">4+</option>
+                                            <option value="5">5+</option>
+                                            <option value="6">6+</option>
+                                            <option value="7">7+</option>
+                                            <option value="8">8+</option>
+                                            <option value="9">9+</option>
+                                            <option value="10">10+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Baño(s)</label>
+                                        <select id="banos" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="0">Cualquiera</option>
+                                            <option value="1">1+</option>
+                                            <option value="2">2+</option>
+                                            <option value="3">3+</option>
+                                            <option value="4">4+</option>
+                                            <option value="5">5+</option>
+                                            <option value="6">6+</option>
+                                            <option value="7">7+</option>
+                                            <option value="8">8+</option>
+                                            <option value="9">9+</option>
+                                            <option value="10">10+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-2">Baño medio</label>
+                                        <div class="flex items-center space-x-3 bg-slate-50 border border-slate-200 rounded-xl p-3">
+                                            <input type="checkbox" id="bano_medio" value="Sí" class="w-4 h-4 rounded text-[#b58371] border-slate-300 focus:ring-[#b58371] cursor-pointer">
+                                            <label for="bano_medio" class="text-[11px] font-bold uppercase tracking-widest text-slate-600 cursor-pointer select-none">
+                                                Incluye baño medio
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Estacionamiento</label>
+                                        <select id="est" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="0">Cualquiera</option>
+                                            <option value="1">1+</option>
+                                            <option value="2">2+</option>
+                                            <option value="3">3+</option>
+                                            <option value="4">4+</option>
+                                            <option value="5">5+</option>
+                                            <option value="6">6+</option>
+                                            <option value="7">7+</option>
+                                            <option value="8">8+</option>
+                                            <option value="9">9+</option>
+                                            <option value="10">10+</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="flex-1">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Área Privada</label>
+                                            <input type="text" id="area_privada" placeholder=" " class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                        </div>
+                                        <div class="w-20">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Unidad</label>
+                                            <select id="unidad_privada" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                                <option value="m²">m²</option>
+                                                <option value="ha">ha</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="flex-1">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Área Construida</label>
+                                            <input type="text" id="area_construida" placeholder=" " class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                        </div>
+                                        <div class="w-20">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Unidad</label>
+                                            <select id="unidad_construida" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                                <option value="m²">m²</option>
+                                                <option value="ha">ha</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="flex-1">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Área Total / Terreno</label>
+                                            <input type="text" id="area_total" placeholder=" " class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                        </div>
+                                        <div class="w-20">
+                                            <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Unidad</label>
+                                            <select id="unidad_total" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                                <option value="m²">m²</option>
+                                                <option value="ha">ha</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="md:col-span-3">
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Video (YouTube URL)</label>
+                                        <input type="url" id="video" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UBICACIÓN GEOGRÁFICA -->
+                            <div class="space-y-3">
+                                <div class="section-header">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Ubicación Geográfica</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Estado</label>
+                                        <select id="estado" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="">Selecciona un estado...</option>
+                                            <option value="Distrito Capital">Distrito Capital</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Ciudad</label>
+                                        <select id="ciudad" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="">Selecciona una ciudad...</option>
+                                            <option value="Caracas">Caracas</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Urbanización</label>
+                                        <select id="urbanizacion" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
+                                            <option value="">Selecciona una urbanización...</option>
+                                            <option value="Alta Florida">Alta Florida</option>
+                                            <option value="Alta Vista">Alta Vista</option>
+                                            <option value="Altamira">Altamira</option>
+                                            <option value="Altamira Sur">Altamira Sur</option>
+                                            <option value="Alto Hatillo">Alto Hatillo</option>
+                                            <option value="Alto Prado">Alto Prado</option>
+                                            <option value="Altos de Carimao">Altos de Carimao</option>
+                                            <option value="Altos de La Trinidad">Altos de La Trinidad</option>
+                                            <option value="Antímano">Antímano</option>
+                                            <option value="Araguaney">Araguaney</option>
+                                            <option value="Artigas">Artigas</option>
+                                            <option value="Ávila">Ávila</option>
+                                            <option value="Baruta">Baruta</option>
+                                            <option value="Bella Vista">Bella Vista</option>
+                                            <option value="Bello Campo">Bello Campo</option>
+                                            <option value="Bello Monte">Bello Monte</option>
+                                            <option value="Boleita Norte">Boleita Norte</option>
+                                            <option value="Boleita Sur">Boleita Sur</option>
+                                            <option value="Bosque Valle">Bosque Valle</option>
+                                            <option value="Bosques de la Lagunita">Bosques de la Lagunita</option>
+                                            <option value="Buena Vista">Buena Vista</option>
+                                            <option value="Caicaguana">Caicaguana</option>
+                                            <option value="Campo Alegre">Campo Alegre</option>
+                                            <option value="Campo Claro">Campo Claro</option>
+                                            <option value="Caricuao">Caricuao</option>
+                                            <option value="Casalta II">Casalta II</option>
+                                            <option value="Catia">Catia</option>
+                                            <option value="Caurimare">Caurimare</option>
+                                            <option value="Cedrito">Cedrito</option>
+                                            <option value="Cementerio">Cementerio</option>
+                                            <option value="Centro">Centro</option>
+                                            <option value="Cerro Verde">Cerro Verde</option>
+                                            <option value="Chacaíto">Chacaíto</option>
+                                            <option value="Chacao">Chacao</option>
+                                            <option value="Chapellín">Chapellín</option>
+                                            <option value="Charallavito">Charallavito</option>
+                                            <option value="Chuao">Chuao</option>
+                                            <option value="Chulavista">Chulavista</option>
+                                            <option value="Coche">Coche</option>
+                                            <option value="Colinas de Bello Monte">Colinas de Bello Monte</option>
+                                            <option value="Colinas de Caicaguana">Colinas de Caicaguana</option>
+                                            <option value="Colinas de La California">Colinas de La California</option>
+                                            <option value="Colinas de La Tahona">Colinas de La Tahona</option>
+                                            <option value="Colinas de las Acacias">Colinas de las Acacias</option>
+                                            <option value="Colinas de Los Caobos">Colinas de Los Caobos</option>
+                                            <option value="Colinas de Los Chaguaramos">Colinas de Los Chaguaramos</option>
+                                            <option value="Colinas de Los Ruices">Colinas de Los Ruices</option>
+                                            <option value="Colinas de Quinta Altamira">Colinas de Quinta Altamira</option>
+                                            <option value="Colinas de Santa Mónica">Colinas de Santa Mónica</option>
+                                            <option value="Colinas de Valle Arriba">Colinas de Valle Arriba</option>
+                                            <option value="Colinas de Valle Arriba / Mirador de Los Campitos">Colinas de Valle Arriba / Mirador de Los Campitos</option>
+                                            <option value="Colinas de Vista Alegre">Colinas de Vista Alegre</option>
+                                            <option value="Colinas del Tamanaco">Colinas del Tamanaco</option>
+                                            <option value="Corralito">Corralito</option>
+                                            <option value="Country Club">Country Club</option>
+                                            <option value="Cultura">Cultura</option>
+                                            <option value="Cumbres de Curumo">Cumbres de Curumo</option>
+                                            <option value="El Ávila">El Ávila</option>
+                                            <option value="El Bosque">El Bosque</option>
+                                            <option value="El Cafetal">El Cafetal</option>
+                                            <option value="El Cigarral">El Cigarral</option>
+                                            <option value="El Conde">El Conde</option>
+                                            <option value="El Encantado">El Encantado</option>
+                                            <option value="El Hatillo">El Hatillo</option>
+                                            <option value="El Junko">El Junko</option>
+                                            <option value="El Junquito">El Junquito</option>
+                                            <option value="El Llanito">El Llanito</option>
+                                            <option value="El Marques">El Marqués</option>
+                                            <option value="El Mirador">El Mirador</option>
+                                            <option value="El Paraíso">El Paraíso</option>
+                                            <option value="El Pedregal">El Pedregal</option>
+                                            <option value="El Peñón">El Peñón</option>
+                                            <option value="El Placer">El Placer</option>
+                                            <option value="El Recreo">El Recreo</option>
+                                            <option value="El Rosal">El Rosal</option>
+                                            <option value="El Valle">El Valle</option>
+                                            <option value="Escampadero">Escampadero</option>
+                                            <option value="Galipán">Galipán</option>
+                                            <option value="Gavilán">Gavilán</option>
+                                            <option value="Guaicaipuro">Guaicaipuro</option>
+                                            <option value="Guaicay">Guaicay</option>
+                                            <option value="Guaicoco">Guaicoco</option>
+                                            <option value="Hacienda Las Marías">Hacienda Las Marías</option>
+                                            <option value="Horizonte">Horizonte</option>
+                                            <option value="Hoyo de La Puerta">Hoyo de La Puerta</option>
+                                            <option value="Industrial Las Mayas">Industrial Las Mayas</option>
+                                            <option value="Industrial Las Nayas">Industrial Las Nayas</option>
+                                            <option value="Izcaragua">Izcaragua</option>
+                                            <option value="Juan Pablo II">Juan Pablo II</option>
+                                            <option value="Karimao Country">Karimao Country</option>
+                                            <option value="La Alameda">La Alameda</option>
+                                            <option value="La Bonita">La Bonita</option>
+                                            <option value="La Boyera">La Boyera</option>
+                                            <option value="La California Norte">La California Norte</option>
+                                            <option value="La California Sur">La California Sur</option>
+                                            <option value="La Campiña">La Campiña</option>
+                                            <option value="La Carlota">La Carlota</option>
+                                            <option value="La Castellana">La Castellana</option>
+                                            <option value="La Ciudadela">La Ciudadela</option>
+                                            <option value="La Escondida">La Escondida</option>
+                                            <option value="La Floresta">La Floresta</option>
+                                            <option value="La Florida">La Florida</option>
+                                            <option value="La Guairita">La Guairita</option>
+                                            <option value="La Hoyada">La Hoyada</option>
+                                            <option value="La Lagunita Country Club">La Lagunita Country Club</option>
+                                            <option value="La Pastora">La Pastora</option>
+                                            <option value="La Paz">La Paz</option>
+                                            <option value="La Quebradita">La Quebradita</option>
+                                            <option value="La Tahona">La Tahona</option>
+                                            <option value="La Trinidad">La Trinidad</option>
+                                            <option value="La Unión">La Unión</option>
+                                            <option value="La Urbina">La Urbina</option>
+                                            <option value="La Yaguara">La Yaguara</option>
+                                            <option value="Las Acacias">Las Acacias</option>
+                                            <option value="Las Delicias de Sabana Grande">Las Delicias de Sabana Grande</option>
+                                            <option value="Las Esmeraldas">Las Esmeraldas</option>
+                                            <option value="Las Marías">Las Marías</option>
+                                            <option value="Las Mercedes">Las Mercedes</option>
+                                            <option value="Las Mesetas de Santa Rosa de Lima">Las Mesetas de Santa Rosa de Lima</option>
+                                            <option value="Las Minas">Las Minas</option>
+                                            <option value="Las Palmas">Las Palmas</option>
+                                            <option value="Lebrun">Lebrun</option>
+                                            <option value="Llano Verde">Llano Verde</option>
+                                            <option value="Loira">Loira</option>
+                                            <option value="Loma Larga">Loma Larga</option>
+                                            <option value="Loma Linda">Loma Linda</option>
+                                            <option value="Lomas de Bello Monte">Lomas de Bello Monte</option>
+                                            <option value="Lomas de Chuao">Lomas de Chuao</option>
+                                            <option value="Lomas de La Alameda">Lomas de La Alameda</option>
+                                            <option value="Lomas de La Lagunita">Lomas de La Lagunita</option>
+                                            <option value="Lomas de La Trinidad">Lomas de La Trinidad</option>
+                                            <option value="Lomas de Las Mercedes">Lomas de Las Mercedes</option>
+                                            <option value="Lomas de Los Campitos">Lomas de Los Campitos</option>
+                                            <option value="Lomas de Los Chorros">Lomas de Los Chorros</option>
+                                            <option value="Lomas de Monte Claro">Lomas de Monte Claro</option>
+                                            <option value="Lomas de Prados del Este">Lomas de Prados del Este</option>
+                                            <option value="Lomas de San Rafael de La Florida">Lomas de San Rafael de La Florida</option>
+                                            <option value="Lomas de San Roman">San Román</option>
+                                            <option value="Lomas de Santa Fe">Lomas de Santa Fe</option>
+                                            <option value="Lomas de Sorocaima">Lomas de Sorocaima</option>
+                                            <option value="Lomas de Terrabella">Lomas de Terrabella</option>
+                                            <option value="Lomas de Urdaneta">Lomas de Urdaneta</option>
+                                            <option value="Lomas de Urquia">Lomas de Urquía</option>
+                                            <option value="Lomas del Avila">Lomas del Ávila</option>
+                                            <option value="Lomas del Club Hipico">Lomas del Club Hípico</option>
+                                            <option value="Lomas del Halcon">Lomas del Halcón</option>
+                                            <option value="Lomas del Mirador">Lomas del Mirador</option>
+                                            <option value="Lomas del Sol">Lomas del Sol</option>
+                                            <option value="Los Anaucos">Los Anaucos</option>
+                                            <option value="Los Campitos">Los Campitos</option>
+                                            <option value="Los Caobos">Los Caobos</option>
+                                            <option value="Los Cedros">Los Cedros</option>
+                                            <option value="Los Chaguaramos">Los Chaguaramos</option>
+                                            <option value="Los Chorros">Los Chorros</option>
+                                            <option value="Los Cortijos de Lourdes">Los Cortijos de Lourdes</option>
+                                            <option value="Los Dos Caminos">Los Dos Caminos</option>
+                                            <option value="Los Geranios">Los Geranios</option>
+                                            <option value="Los Guayabitos">Los Guayabitos</option>
+                                            <option value="Los Naranjos de Las Mercedes">Los Naranjos de Las Mercedes</option>
+                                            <option value="Los Naranjos del Cafetal">Los Naranjos del Cafetal</option>
+                                            <option value="Los Naranjos Humboldt">Los Naranjos Humboldt</option>
+                                            <option value="Los Palos Grandes">Los Palos Grandes</option>
+                                            <option value="Los Pomelos">Los Pomelos</option>
+                                            <option value="Los Robles">Los Robles</option>
+                                            <option value="Los Roques, Isla San Agustin">Los Roques, Isla San Agustín</option>
+                                            <option value="Los Rosales">Los Rosales</option>
+                                            <option value="Los Ruices">Los Ruices</option>
+                                            <option value="Los Ruices Sur">Los Ruices Sur</option>
+                                            <option value="Los Samanes">Los Samanes</option>
+                                            <option value="Macaracuay">Macaracuay</option>
+                                            <option value="Macarao">Macarao</option>
+                                            <option value="Manzanares">Manzanares</option>
+                                            <option value="Mariche">Mariche</option>
+                                            <option value="Mariperez">Maripérez</option>
+                                            <option value="Mirador de Los Campitos I">Mirador de Los Campitos I</option>
+                                            <option value="Miranda">Miranda</option>
+                                            <option value="Miravila">Miravila</option>
+                                            <option value="Montalban I">Montalbán I</option>
+                                            <option value="Montalban II">Montalbán II</option>
+                                            <option value="Montalban III">Montalbán III</option>
+                                            <option value="Monte Alto">Monte Alto</option>
+                                            <option value="Monte Claro">Monte Claro</option>
+                                            <option value="Monte Elena">Monte Elena</option>
+                                            <option value="Montecristo">Montecristo</option>
+                                            <option value="Monterrey">Monterrey</option>
+                                            <option value="Municipio Baruta">Municipio Baruta</option>
+                                            <option value="Nuevo Prado">Nuevo Prado</option>
+                                            <option value="Oripoto">Oripoto</option>
+                                            <option value="Palo Verde">Palo Verde</option>
+                                            <option value="Paracotos">Paracotos</option>
+                                            <option value="Parque Caiza">Parque Caiza</option>
+                                            <option value="Parque Carabobo">Parque Carabobo</option>
+                                            <option value="Parque Central">Parque Central</option>
+                                            <option value="Parque Oripoto">Parque Oripoto</option>
+                                            <option value="Parroquia 23 de Enero">Parroquia 23 de Enero</option>
+                                            <option value="Parroquia Altagracia">Parroquia Altagracia</option>
+                                            <option value="Parroquia Catedral">Parroquia Catedral</option>
+                                            <option value="Parroquia La Candelaria">Parroquia La Candelaria</option>
+                                            <option value="Parroquia La Vega">Parroquia La Vega</option>
+                                            <option value="Parroquia Macarao">Parroquia Macarao</option>
+                                            <option value="Parroquia San Agustin">Parroquia San Agustín</option>
+                                            <option value="Parroquia San Jose">Parroquia San José</option>
+                                            <option value="Parroquia San Juan">Parroquia San Juan</option>
+                                            <option value="Parroquia San Pedro">Parroquia San Pedro</option>
+                                            <option value="Parroquia Santa Rosalia">Parroquia Santa Rosalía</option>
+                                            <option value="Parroquia Santa Teresa">Parroquia Santa Teresa</option>
+                                            <option value="Pedregal de Chapellin">Pedregal de Chapellín</option>
+                                            <option value="Petare">Petare</option>
+                                            <option value="Piedra Azul">Piedra Azul</option>
+                                            <option value="Plaza Venezuela">Plaza Venezuela</option>
+                                            <option value="Prado de Maria">Prado de María</option>
+                                            <option value="Prado Humboldt">Prado Humboldt</option>
+                                            <option value="Prados del Este">Prados del Este</option>
+                                            <option value="Propatria">Propatria</option>
+                                            <option value="Puente Hierro">Puente Hierro</option>
+                                            <option value="Quebrada Honda">Quebrada Honda</option>
+                                            <option value="Quinta Crespo">Quinta Crespo</option>
+                                            <option value="Ruiz Pineda">Ruiz Pineda</option>
+                                            <option value="Ruperto Lugo">Ruperto Lugo</option>
+                                            <option value="Sabana Grande">Sabana Grande</option>
+                                            <option value="Sabaneta">Sabaneta</option>
+                                            <option value="San Agustin del Norte">San Agustín del Norte</option>
+                                            <option value="San Agustin del Sur">San Agustín del Sur</option>
+                                            <option value="San Bernardino">San Bernardino</option>
+                                            <option value="San Jose">San José</option>
+                                            <option value="San Juan">San Juan</option>
+                                            <option value="San Luis">San Luis</option>
+                                            <option value="San Marino">San Marino</option>
+                                            <option value="San Martin">San Martín</option>
+                                            <option value="San Rafael de La Florida">San Rafael de La Florida</option>
+                                            <option value="San Roman">San Román</option>
+                                            <option value="Santa Cecilia">Santa Cecilia</option>
+                                            <option value="Santa Eduvigis">Santa Eduvigis</option>
+                                            <option value="Santa Fe Norte">Santa Fe Norte</option>
+                                            <option value="Santa Fe Sur">Santa Fe Sur</option>
+                                            <option value="Santa Gertrudis">Santa Gertrudis</option>
+                                            <option value="Santa Ines">Santa Inés</option>
+                                            <option value="Santa Marta">Santa Marta</option>
+                                            <option value="Santa Monica">Santa Mónica</option>
+                                            <option value="Santa Paula">Santa Paula</option>
+                                            <option value="Santa Rosa de Lima">Santa Rosa de Lima</option>
+                                            <option value="Santa Sofia">Santa Sofía</option>
+                                            <option value="Sarria">Sarría</option>
+                                            <option value="Sebucan">Sebucán</option>
+                                            <option value="Sector El Arroyo">Sector El Arroyo</option>
+                                            <option value="Sector Gavilan">Sector Gavilán</option>
+                                            <option value="Sector Guaire Abajo">Sector Guaire Abajo</option>
+                                            <option value="Simon Bolivar">Simón Bolívar</option>
+                                            <option value="Simon Rodriguez">Simón Rodríguez</option>
+                                            <option value="Solar del Hatillo">Solar del Hatillo</option>
+                                            <option value="Solares del Carmen">Solares del Carmen</option>
+                                            <option value="Sorocaima">Sorocaima</option>
+                                            <option value="Terrazas de Bella Vista">Terrazas de Bella Vista</option>
+                                            <option value="Terrazas de Guaicoco">Terrazas de Guaicoco</option>
+                                            <option value="Terrazas de La Alameda">Terrazas de La Alameda</option>
+                                            <option value="Terrazas De La Vega">Terrazas De La Vega</option>
+                                            <option value="Terrazas de Santa Fe">Terrazas de Santa Fe</option>
+                                            <option value="Terrazas de Santa Ines">Terrazas de Santa Inés</option>
+                                            <option value="Terrazas del Avila">Terrazas del Ávila</option>
+                                            <option value="Terrazas del Club Hipico">Terrazas del Club Hípico</option>
+                                            <option value="Turgua">Turgua</option>
+                                            <option value="Turumo">Turumo</option>
+                                            <option value="Tusmare">Tusmare</option>
+                                            <option value="Valle Abajo">Valle Abajo</option>
+                                            <option value="Valle Alto">Valle Alto</option>
+                                            <option value="Valle Arriba">Valle Arriba</option>
+                                            <option value="Villa Nueva Hatillo">Villa Nueva Hatillo</option>
+                                            <option value="Vista Alegre">Vista Alegre</option>
+                                            <option value="Vizcaya">Vizcaya</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- DESCRIPCIÓN DEL INMUEBLE -->
+                            <div class="space-y-3">
+                                <div class="section-header">
+                                    <i class="fas fa-align-left"></i>
+                                    <span>Descripción del Inmueble</span>
+                                </div>
+                                <div class="pt-2">
+                                    <textarea id="descripcion" rows="4" placeholder="Escribe aquí todas las bondades y acabados del inmueble..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- CARACTERÍSTICAS -->
+                            <div class="space-y-3">
+                                <div class="section-header">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Características</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                                    
+                                    <!-- CARACTERÍSTICAS INTERNAS -->
+                                    <div class="relative">
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Características internas</label>
+                                        <button type="button" onclick="toggleDropdown('dropdown-internas')" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-left flex justify-between items-center focus:outline-none focus:border-[#b58371]">
+                                            <span id="selected-internas-text" class="truncate text-slate-600">Seleccionar</span>
+                                            <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
+                                        </button>
+                                        
+                                        <div id="dropdown-internas" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-2xl shadow-xl z-30 p-3 space-y-2 max-h-60 custom-scroll overflow-y-auto">
+                                            <div class="p-2 border-b border-stone-200 bg-stone-50 rounded-t-lg">
+                                                <input type="text" placeholder="Buscar..." onkeyup="filtrarOpciones('search-internas', 'list-internas')" id="search-internas" class="w-full border border-stone-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-[#b58371]">
+                                            </div>
+
+                                            <div id="list-internas" class="max-h-60 overflow-y-auto custom-scroll text-xs text-stone-700 divide-y divide-stone-100 space-y-1">
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 bg-stone-100 font-bold sticky top-0 z-10 border-b border-stone-200">
+                                                    <input type="checkbox" id="chk-all-internas" onchange="seleccionarTodos('chk-all-internas', 'feat_internas', 'actualizarSeleccionInternas')" class="rounded text-[#b58371]">
+                                                    <span>Seleccionar Todos</span>
+                                                </label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Agua" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Agua</span></label>
+                              		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Aire acondicionado" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Aire acondicionado</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Amoblado" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Amoblado</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Armarios Empotrados" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Armarios Empotrados</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Balcón" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Balcón</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Baño auxiliar" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Baño auxiliar</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Baño en habitación principal" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Baño en habitación principal</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Calentador" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Calentador</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Clósets" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Clósets</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Cocina equipada" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Cocina equipada</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Cocina integral" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Cocina integral</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Depósito" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Depósito</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Despensa" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Despensa</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Doble Ventana" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Doble Ventana</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Electricidad" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Electricidad</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Gas domiciliario" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Gas domiciliario</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Internet" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Internet</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Suelo de cerámica / mármol" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Suelo de cerámica / mármol</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Unifamiliar" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Unifamiliar</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Vista panorámica" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Vista panorámica</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Zona de lavandería" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Zona de lavandería</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Admite mascotas" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Admite mascotas</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Adosado" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Adosado</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Alarma" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Alarma</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Altillo" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Altillo</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Barra estilo americano" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Barra estilo americano</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Biblioteca/Estudio" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Biblioteca/Estudio</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Bifamiliar" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Bifamiliar</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Chimenea" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Chimenea</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Citófono / Intercomunicador" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Citófono / Intercomunicador</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Cocina tipo americano" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Cocina tipo americano</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Comedor auxiliar" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Comedor auxiliar</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Control de ruido" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Control de ruido</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Control térmico" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Control térmico</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Detección de humo" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Detección de humo</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Extractor" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Extractor</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Habitación conductores" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Habitación conductores</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Habitación servicio" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Habitación servicio</span></label>
+                             		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Hall de alcobas" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Hall de alcobas</span></label>
+                             		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Horno" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Horno</span></label>
+                              		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Hospedaje Turismo" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Hospedaje Turismo</span></label>
+                              		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Inmueble de Lujo" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Inmueble de Lujo</span></label>
+                             		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Jacuzzi" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Jacuzzi</span></label>
+                             	   	        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Lavaplatos" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Lavaplatos</span></label>
+                               		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Piso Laminado" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Piso Laminado</span></label>
+                              		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Piso Madera" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Piso Madera</span></label>
+                              		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Puerta de seguridad" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Puerta de seguridad</span></label>
+                            		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Puerta eléctrica" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Puerta eléctrica</span></label>
+                             		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Reformado" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Reformado</span></label>
+                            		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Sala de usos múltiples" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Sala de usos múltiples</span></label>
+                           		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Sauna" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Sauna</span></label>
+                           		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Trastero" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Trastero</span></label>
+                          		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Trifamiliar" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Trifamiliar</span></label>
+                             		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Turco" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Turco</span></label>
+                            		        <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Vestidor" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Vestidor</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_internas" value="Video por cable" onchange="actualizarSeleccionInternas()" class="rounded text-[#b58371]"> <span>Video por cable</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CARACTERÍSTICAS EXTERNAS -->
+                                    <div class="relative">
+                                        <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Características externas</label>
+                                        <button type="button" onclick="toggleDropdown('dropdown-externas')" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-left flex justify-between items-center focus:outline-none focus:border-[#b58371]">
+                                            <span id="selected-externas-text" class="truncate text-slate-600">Seleccionar</span>
+                                            <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
+                                        </button>
+                                        
+                                        <div id="dropdown-externas" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-2xl shadow-xl z-30 p-3 space-y-2 max-h-60 custom-scroll overflow-y-auto">
+                                            <div class="p-2 border-b border-stone-200 bg-stone-50 rounded-t-lg">
+                                                <input type="text" placeholder="Buscar..." onkeyup="filtrarOpciones('search-externas', 'list-externas')" id="search-externas" class="w-full border border-stone-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-[#b58371]">
+                                            </div>
+
+                                            <div id="list-externas" class="max-h-60 overflow-y-auto custom-scroll text-xs text-stone-700 divide-y divide-stone-100 space-y-1">
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 bg-stone-100 font-bold sticky top-0 z-10 border-b border-stone-200">
+                                                    <input type="checkbox" id="chk-all-externas" onchange="seleccionarTodos('chk-all-externas', 'feat_externas', 'actualizarSeleccionExternas')" class="rounded text-[#b58371]">
+                                                    <span>Seleccionar Todos</span>
+                                                </label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Acceso pavimentado" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Acceso pavimentado</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Árboles frutales" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Árboles frutales</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Área Social" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Área Social</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Ascensor" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Ascensor</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Centros comerciales" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Centros comerciales</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cerca zona urbana" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cerca zona urbana</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cochera / Garaje" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cochera / Garaje</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Colegios / Universidades" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Colegios / Universidades</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Garaje" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Garaje</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Garita de Entrada" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Garita de Entrada</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Jardín" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Jardín</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Parqueadero visitantes" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Parqueadero visitantes</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Parques cercanos" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Parques cercanos</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Playas" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Playas</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Portería / Recepción" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Portería / Recepción</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Pozo de agua natural" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Pozo de agua natural</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Río/Quebrada cercano" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Río/Quebrada cercano</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Sala de internet" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Sala de internet</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Salón Comunal" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Salón Comunal</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Shut de basura" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Shut de basura</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Sistema de riego" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Sistema de riego</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Sobre vía principal" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Sobre vía principal</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Trans. público cercano" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Trans. público cercano</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Urbanización Cerrada" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Urbanización Cerrada</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Vigilancia" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Vigilancia</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Zona comercial" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Zona comercial</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Zona residencial" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Zona residencial</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Zonas verdes" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Zonas verdes</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Acceso con tarjetas o dispositivos" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Acceso con tarjetas o dispositivos</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Acceso discapacitados" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Acceso discapacitados</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Áreas Turísticas" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Áreas Turísticas</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Bahías de parqueo" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Bahías de parqueo</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Barbacoa / Parrilla / Quincho" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Barbacoa / Parrilla / Quincho</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Bosque nativos" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Bosque nativos</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Bungalow / pareado" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Bungalow / pareado</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Calles de Tosca" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Calles de Tosca</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cancha de baloncesto" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cancha de baloncesto</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cancha de fútbol" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cancha de fútbol</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cancha de squash" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cancha de squash</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cancha de tenis" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cancha de tenis</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Centro Médico" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Centro Médico</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cerca a Jardines y Colegios" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cerca a Jardines y Colegios</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cerca a Parque industrial" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cerca a Parque industrial</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cerca a restaurantes" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cerca a restaurantes</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Cerca a tiendas de barrio" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Cerca a tiendas de barrio</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Circuito cerrado de TV" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Circuito cerrado de TV</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Club House" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Club House</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Club Social" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Club Social</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Edificio Inteligente" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Edificio Inteligente</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Energía solar" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Energía solar</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Establo" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Establo</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Galpón" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Galpón</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Gimnasio" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Gimnasio</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Invernadero" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Invernadero</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Jardín de techo" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Jardín de techo</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Jaula de golf" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Jaula de golf</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Kiosko" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Kiosko</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Lago" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Lago</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Laguna" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Laguna</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Luz en la mañana" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Luz en la mañana</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Luz en la tarde" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Luz en la tarde</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Montaña" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Montaña</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Oficina de negocios" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Oficina de negocios</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Parqueadero inteligente" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Parqueadero inteligente</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Patio" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Patio</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Pesebrera" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Pesebrera</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Piscina" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Piscina</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Pista de Pádel" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Pista de Pádel</span></label>
+                                                <label class="flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-stone-50 option-item"><input type="checkbox" name="feat_externas" value="Planta eléctrica" onchange="actualizarSeleccionExternas()" class="rounded text-[#b58371]"> <span>Planta eléctrica</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- IMÁGENES -->
+                            <div class="space-y-3">
+                                <div class="section-header">
+                                    <i class="fas fa-images"></i>
+                                    <span>Imágenes y Multimedia</span>
+                                </div>
+                                <div class="pt-2">
+                                    <input type="file" id="image-file-input" multiple accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#b58371] file:text-white" onchange="manejarSeleccionImagenes(event)">
+                                    <div id="preview-imagenes-container" class="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3"></div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 text-center">
+                                <button type="submit" id="btn-submit" class="bg-[#b58371] hover:bg-[#a37260] text-white text-xs font-semibold tracking-[0.2em] uppercase px-8 py-3.5 rounded-xl shadow-md transition">
+                                    Guardar y Publicar Inmueble
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts de Autenticación, Selectores Dinámicos, Copiado de Link y CRM -->
+    <script>
+        const USUARIO_CORRECTO = "admin";
+        const PASSWORD_CORRECTO = "ramos2026";
+
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxd6u9xIKb87cO_mj1dHPX8g2eoPSyoRidywt6XvGk2BKUGYf1Ow9kh-XuFHUlq75Yl/exec';
+        const IMGBB_API_KEY = '1a697307716ee04eb93fa322e0795404';
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            document.getElementById('dropdown-internas').classList.add('hidden');
+            document.getElementById('dropdown-externas').classList.add('hidden');
+            if (isHidden) dropdown.classList.remove('hidden');
+        }
+
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.relative')) {
+                document.getElementById('dropdown-internas').classList.add('hidden');
+                document.getElementById('dropdown-externas').classList.add('hidden');
+            }
+        });
+
+        function filtrarOpciones(inputId, listId) {
+            const input = document.getElementById(inputId);
+            const filter = input.value.toLowerCase();
+            const list = document.getElementById(listId);
+            const items = list.getElementsByClassName('option-item');
+
+            for (let i = 0; i < items.length; i++) {
+                const text = items[i].textContent || items[i].innerText;
+                items[i].style.display = text.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+
+        function seleccionarTodos(chkAllId, nameGroup, callbackName) {
+            const chkAll = document.getElementById(chkAllId);
+            const checkboxes = document.querySelectorAll(`input[name="${nameGroup}"]`);
+            
+            checkboxes.forEach(cb => {
+                if (cb.closest('.option-item').style.display !== 'none') {
+                    cb.checked = chkAll.checked;
+                }
+            });
+
+            if (window[callbackName]) window[callbackName]();
+        }
+
+        function actualizarSeleccionInternas() {
+            const marcados = Array.from(document.querySelectorAll('input[name="feat_internas"]:checked')).map(cb => cb.value);
+            const spanText = document.getElementById('selected-internas-text');
+            
+            if (marcados.length === 0) {
+                spanText.textContent = "Seleccionar";
+                spanText.classList.remove('text-slate-900', 'font-bold');
+                spanText.classList.add('text-slate-600');
+            } else {
+                spanText.textContent = marcados.join(', ');
+                spanText.classList.remove('text-slate-600');
+                spanText.classList.add('text-slate-900', 'font-bold');
+            }
+        }
+
+        function actualizarSeleccionExternas() {
+            const marcados = Array.from(document.querySelectorAll('input[name="feat_externas"]:checked')).map(cb => cb.value);
+            const spanText = document.getElementById('selected-externas-text');
+            
+            if (marcados.length === 0) {
+                spanText.textContent = "Seleccionar";
+                spanText.classList.remove('text-slate-900', 'font-bold');
+                spanText.classList.add('text-slate-600');
+            } else {
+                spanText.textContent = marcados.join(', ');
+                spanText.classList.remove('text-slate-600');
+                spanText.classList.add('text-slate-900', 'font-bold');
+            }
+        }
+
+        function obtenerSeleccionados(nameGroup) {
+            const checkboxes = document.querySelectorAll(`input[name="${nameGroup}"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value).join(', ');
+        }
+
+        function marcarValores(nameGroup, labelId, stringValores, callbackName) {
+            const checkboxes = document.querySelectorAll(`input[name="${nameGroup}"]`);
+            checkboxes.forEach(cb => cb.checked = false);
+            if (stringValores) {
+                const valores = stringValores.split(',').map(v => v.trim());
+                checkboxes.forEach(cb => {
+                    if (valores.includes(cb.value)) cb.checked = true;
+                });
+            }
+            if (window[callbackName]) window[callbackName]();
+        }
+
+        let listaPropiedades = [];
+        let listaUrlsActuales = [];
+        let draggedIndex = null;
+        let esEdicion = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('ramos_sesion_activa') === 'true') {
+                desbloquearPanel();
+            }
+        });
+
+        function validarLogin() {
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            const errorMsg = document.getElementById('login-error');
+
+            if (user === USUARIO_CORRECTO && pass === PASSWORD_CORRECTO) {
+                sessionStorage.setItem('ramos_sesion_activa', 'true');
+                desbloquearPanel();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function desbloquearPanel() {
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('admin-app').classList.remove('hidden');
+            cargarDatosAdmin();
+        }
+
+        function cerrarSesion() {
+            sessionStorage.removeItem('ramos_sesion_activa');
+            window.location.reload();
+        }
+
+        function abrirModalRecuperar() {
+            document.getElementById('modal-recuperar').classList.remove('hidden');
+            document.getElementById('modal-recuperar').classList.add('flex');
+        }
+
+        function cerrarModalRecuperar() {
+            document.getElementById('modal-recuperar').classList.add('hidden');
+            document.getElementById('modal-recuperar').classList.remove('flex');
+            document.getElementById('correo-recuperacion').value = '';
+            document.getElementById('mensaje-recuperacion').classList.add('hidden');
+        }
+
+        async function enviarRecuperacion() {
+            const correo = document.getElementById('correo-recuperacion').value.trim();
+            const msg = document.getElementById('mensaje-recuperacion');
+            const btn = document.getElementById('btn-enviar-recu');
+
+            if (!correo) {
+                msg.textContent = "Por favor ingresa un correo válido.";
+                msg.className = "text-xs font-semibold text-red-600 bg-red-50 p-2 rounded-lg";
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = "Enviando...";
+
+            try {
+                const response = await fetch(`${WEB_APP_URL}?action=recovery&correo=${encodeURIComponent(correo)}`);
+                const resultado = await response.json();
+
+                msg.textContent = resultado.message;
+                msg.className = resultado.success ? "text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded-lg" : "text-xs font-semibold text-red-600 bg-red-50 p-2 rounded-lg";
+                msg.classList.remove('hidden');
+
+                if (resultado.success) setTimeout(cerrarModalRecuperar, 4000);
+            } catch (error) {
+                msg.textContent = "Error de conexión con el servidor.";
+                msg.className = "text-xs font-semibold text-red-600 bg-red-50 p-2 rounded-lg";
+                msg.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Enviar";
+            }
+        }
+
+        window.procesarAdminSheets = function(data) {
+            if (Array.isArray(data)) {
+                listaPropiedades = data;
+                renderTablaAdmin(listaPropiedades);
+                actualizarEstadisticas(listaPropiedades);
+            } else {
+                document.getElementById('tabla-inmuebles-body').innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500">Error al leer los datos de Google Sheets.</td></tr>`;
+            }
+        };
+
+        function cargarDatosAdmin() {
+            const script = document.createElement('script');
+            script.src = `${WEB_APP_URL}?callback=procesarAdminSheets&_=${new Date().getTime()}`;
+            script.onerror = function() {
+                document.getElementById('tabla-inmuebles-body').innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500">No se pudo conectar con el servidor.</td></tr>`;
+            };
+            document.body.appendChild(script);
+        }
+
+        function actualizarEstadisticas(data) {
+            document.getElementById('stat-total').textContent = data.length;
+            const venta = data.filter(p => (p.negocio || '').toLowerCase().includes('venta')).length;
+            const alquiler = data.filter(p => (p.negocio || '').toLowerCase().includes('alquiler')).length;
+            document.getElementById('stat-venta').textContent = venta;
+            document.getElementById('stat-alquiler').textContent = alquiler;
+        }
+
+        function renderTablaAdmin(data) {
+            const tbody = document.getElementById('tabla-inmuebles-body');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">No hay inmuebles registrados todavía.</td></tr>`;
+                return;
+            }
+
+            data.forEach(p => {
+                const imagenes = p.imagen ? p.imagen.split(',').map(img => img.trim()).filter(Boolean) : [];
+                const portada = imagenes.length > 0 ? imagenes[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=200&q=80';
+                const urlDetalle = `detalle.html?id=${encodeURIComponent(p.id)}`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="p-4">
+                            <a href="${urlDetalle}" target="_blank" title="Ver detalle" class="block group/img">
+                                <img src="${portada}" class="w-14 h-14 object-cover rounded-xl border border-slate-200 shadow-sm transition duration-300 group-hover/img:scale-105 group-hover/img:border-[#b58371]">
+                            </a>
+                        </td>
+                        <td class="p-4">
+                            <a href="${urlDetalle}" target="_blank" class="font-bold text-slate-900 hover:text-[#b58371] transition block">${p.id || 'N/A'}</a>
+                            <span class="text-slate-600 font-medium truncate max-w-xs block">${p.titulo || 'Sin título'}</span>
+                        </td>
+                        <td class="p-4">
+                            <span class="bg-slate-100 text-slate-800 px-2.5 py-1 rounded-md font-bold text-[10px] uppercase">${p.negocio || 'N/A'}</span>
+                            <span class="text-slate-500 block mt-1">${p.tipo || 'N/A'}</span>
+                        </td>
+                        <td class="p-4 font-semibold text-slate-900">
+                            ${p.precio || p.precio_alquiler || 'Consultar'}
+                        </td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center space-x-1.5 flex-wrap gap-y-1">
+                                <button onclick="copiarLinkCliente('${p.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold uppercase px-2.5 py-1.5 rounded-lg transition shadow-sm flex items-center space-x-1" title="Copiar Link Cliente (Limpio)">
+                                    <i class="fas fa-user-check"></i>
+                                    <span>Link Cliente</span>
+                                </button>
+                                <button onclick="copiarLinkPortal('${p.id}')" class="bg-slate-700 hover:bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-1.5 rounded-lg transition shadow-sm flex items-center space-x-1" title="Copiar Link Portal (Completo)">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Link Portal</span>
+                                </button>
+                                <button onclick="editarPropiedad('${p.id}')" class="bg-amber-50 text-amber-600 hover:bg-amber-100 p-2 rounded-lg transition" title="Modificar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="eliminarPropiedad('${p.id}')" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-lg transition" title="Eliminar">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        /* ================= FUNCIONES DE COPIADO DE ENLACES ================= */
+        function copiarLinkCliente(idPropiedad) {
+            const urlBase = window.location.origin + window.location.pathname.replace('admin.html', '');
+            const linkLimpio = `${urlBase}detalle.html?id=${encodeURIComponent(idPropiedad)}&modo=cliente`;
+
+            navigator.clipboard.writeText(linkLimpio).then(() => {
+                alert(`¡Link Cliente copiado al portapapeles!\n\n${linkLimpio}`);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                prompt("Copia el siguiente enlace de cliente:", linkLimpio);
+            });
+        }
+
+        function copiarLinkPortal(idPropiedad) {
+            const urlBase = window.location.origin + window.location.pathname.replace('admin.html', '');
+            const linkPortal = `${urlBase}detalle.html?id=${encodeURIComponent(idPropiedad)}`;
+
+            navigator.clipboard.writeText(linkPortal).then(() => {
+                alert(`¡Link Portal copiado al portapapeles!\n\n${linkPortal}`);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                prompt("Copia el siguiente enlace del portal:", linkPortal);
+            });
+        }
+
+        function cambiarSeccion(seccion) {
+            if (seccion === 'listado') {
+                document.getElementById('seccion-listado').classList.remove('hidden');
+                document.getElementById('seccion-formulario').classList.add('hidden');
+                document.getElementById('btn-menu-listado').className = 'w-full text-left px-5 py-3.5 font-bold flex items-center space-x-3 bg-slate-900 text-white transition';
+                document.getElementById('btn-menu-formulario').className = 'w-full text-left px-5 py-3.5 font-semibold text-slate-600 hover:bg-slate-50 flex items-center space-x-3 border-t border-slate-100 transition';
+                cargarDatosAdmin();
+            } else {
+                document.getElementById('seccion-listado').classList.add('hidden');
+                document.getElementById('seccion-formulario').classList.remove('hidden');
+                document.getElementById('btn-menu-formulario').className = 'w-full text-left px-5 py-3.5 font-bold flex items-center space-x-3 bg-slate-900 text-white transition';
+                document.getElementById('btn-menu-listado').className = 'w-full text-left px-5 py-3.5 font-semibold text-slate-600 hover:bg-slate-50 flex items-center space-x-3 border-t border-slate-100 transition';
+            }
+        }
+
+        function resetearFormulario() {
+            document.getElementById('property-form').reset();
+            const inputId = document.getElementById('id');
+            inputId.value = '';
+            inputId.readOnly = true;
+            inputId.classList.add('bg-slate-100', 'cursor-not-allowed');
+
+            document.getElementById('form-title-label').textContent = 'Cargar Nuevo Inmueble';
+            listaUrlsActuales = [];
+            esEdicion = false;
+            document.getElementById('preview-imagenes-container').innerHTML = '';
+            document.getElementById('bano_medio').checked = false;
+            
+            document.getElementById('tipo').value = '';
+            document.getElementById('negocio').value = '';
+            document.getElementById('hab').value = '0';
+            document.getElementById('banos').value = '0';
+            document.getElementById('est').value = '0';
+            
+            marcarValores('feat_internas', 'selected-internas-text', '', 'actualizarSeleccionInternas');
+            marcarValores('feat_externas', 'selected-externas-text', '', 'actualizarSeleccionExternas');
+        }
+
+        function editarPropiedad(id) {
+            const p = listaPropiedades.find(item => item.id && item.id.toString().trim().toUpperCase() === id.toString().trim().toUpperCase());
+            if (!p) return;
+
+            cambiarSeccion('formulario');
+            document.getElementById('form-title-label').textContent = `Modificar Inmueble: ${p.id}`;
+            
+            const inputId = document.getElementById('id');
+            inputId.value = p.id || '';
+            inputId.readOnly = true;
+            inputId.classList.add('bg-slate-100', 'cursor-not-allowed');
+            
+            document.getElementById('titulo').value = p.titulo || '';
+            document.getElementById('tipo').value = p.tipo || '';
+            document.getElementById('negocio').value = p.negocio || '';
+            document.getElementById('precio').value = p.precio || '';
+            document.getElementById('precio_alquiler').value = p.precio_alquiler || '';
+            document.getElementById('condominio').value = p.condominio || '';
+            document.getElementById('ano_construccion').value = p.ano_construccion || '';
+            document.getElementById('hab').value = p.hab || 0;
+            document.getElementById('banos').value = p.banos || 0;
+            
+            const bMedioVal = String(p.bano_medio || '').trim().toLowerCase();
+            document.getElementById('bano_medio').checked = (bMedioVal === 'sí' || bMedioVal === '1' || bMedioVal === 'true');
+
+            document.getElementById('est').value = p.est || 0;
+            document.getElementById('area_privada').value = p.area_privada || '';
+            document.getElementById('unidad_privada').value = p.unidad_privada || 'm²';
+            document.getElementById('area_construida').value = p.area_construida || '';
+            document.getElementById('unidad_construida').value = p.unidad_construida || 'm²';
+            document.getElementById('area_total').value = p.area_total || '';
+            document.getElementById('unidad_total').value = p.unidad_total || 'm²';
+            document.getElementById('video').value = p.video || '';
+            
+            document.getElementById('estado').value = p.estado || '';
+            document.getElementById('ciudad').value = p.ciudad || 'Caracas';
+            document.getElementById('urbanizacion').value = p.urbanizacion || '';
+
+            document.getElementById('descripcion').value = p.descripcion || '';
+            
+            marcarValores('feat_internas', 'selected-internas-text', p.caracteristicas_internas || '', 'actualizarSeleccionInternas');
+            marcarValores('feat_externas', 'selected-externas-text', p.caracteristicas_externas || '', 'actualizarSeleccionExternas');
+            
+            esEdicion = true;
+            mostrarPreviewsExistentes(p.imagen);
+        }
+
+        function mostrarPreviewsExistentes(imagenStr) {
+            listaUrlsActuales = [];
+            if (imagenStr) {
+                listaUrlsActuales = imagenStr.split(',').map(img => img.trim()).filter(Boolean);
+            }
+            renderizarPreviews();
+        }
+
+        async function eliminarPropiedad(id) {
+            if (!confirm(`¿Estás seguro de eliminar el inmueble ${id}? Esta acción no se puede deshacer.`)) return;
+
+            try {
+                const urlEliminar = `${WEB_APP_URL}?action=delete&id=${encodeURIComponent(id)}&_=${new Date().getTime()}`;
+                await fetch(urlEliminar, { mode: 'no-cors' });
+
+                listaPropiedades = listaPropiedades.filter(p => String(p.id).trim().toUpperCase() !== String(id).trim().toUpperCase());
+                renderTablaAdmin(listaPropiedades);
+                actualizarEstadisticas(listaPropiedades);
+
+                alert('Inmueble eliminado con éxito.');
+            } catch (err) {
+                console.error(err);
+                alert('Error al intentar eliminar el inmueble.');
+            }
+        }
+
+        function manejarSeleccionImagenes(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+            subirArchivosNuevos(files);
+        }
+
+        async function subirArchivosNuevos(files) {
+            const container = document.getElementById('preview-imagenes-container');
+            container.innerHTML += `<div class="col-span-full text-xs text-amber-600 font-semibold py-1"><i class="fas fa-spinner fa-spin mr-1"></i> Subiendo nuevas imágenes...</div>`;
+
+            for (let i = 0; i < files.length; i++) {
+                const formData = new FormData();
+                formData.append("image", files[i]);
+                try {
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                    const json = await res.json();
+                    if (json.success) {
+                        listaUrlsActuales.push(json.data.url);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            renderizarPreviews();
+        }
+
+        function renderizarPreviews() {
+            const container = document.getElementById('preview-imagenes-container');
+            container.innerHTML = '';
+
+            if (listaUrlsActuales.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 col-span-full">No hay imágenes cargadas.</p>';
+                return;
+            }
+
+            listaUrlsActuales.forEach((url, idx) => {
+                container.innerHTML += `
+                    <div draggable="true" 
+                         ondragstart="drag(event, ${idx})" 
+                         ondragover="allowDrop(event)" 
+                         ondrop="drop(event, ${idx})"
+                         class="relative h-24 bg-slate-100 rounded-lg overflow-hidden border border-slate-200 shadow-sm cursor-grab active:cursor-grabbing group">
+                        
+                        <img src="${url}" class="w-full h-full object-cover pointer-events-none">
+                        
+                        <span class="absolute top-1 left-1 bg-slate-900/80 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">#${idx+1}</span>
+                        
+                        <button type="button" onclick="eliminarImagenIndex(${idx})" class="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function drag(event, index) {
+            draggedIndex = index;
+            event.dataTransfer.effectAllowed = "move";
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        }
+
+        function drop(event, targetIndex) {
+            event.preventDefault();
+            if (draggedIndex === null || draggedIndex === targetIndex) return;
+
+            const movedItem = listaUrlsActuales.splice(draggedIndex, 1)[0];
+            listaUrlsActuales.splice(targetIndex, 0, movedItem);
+
+            draggedIndex = null;
+            renderizarPreviews();
+        }
+
+        function eliminarImagenIndex(index) {
+            listaUrlsActuales.splice(index, 1);
+            renderizarPreviews();
+        }
+
+        async function guardarInmueble() {
+            const btn = document.getElementById('btn-submit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Procesando...';
+
+            let idFinal = document.getElementById('id').value.trim();
+
+            if (!esEdicion || !idFinal) {
+                let ultimo = parseInt(localStorage.getItem('ramos_ultimo_id')) || 1051;
+                idFinal = `COD-${ultimo}`;
+                localStorage.setItem('ramos_ultimo_id', ultimo + 1);
+            }
+
+            let enlacesImagenes = listaUrlsActuales.join(', ');
+            let banoMedioVal = document.getElementById('bano_medio').checked ? 'Sí' : 'No';
+
+            const payload = {
+                id: idFinal,
+                titulo: document.getElementById('titulo').value.trim(),
+                tipo: document.getElementById('tipo').value,
+                negocio: document.getElementById('negocio').value,
+                precio: document.getElementById('precio').value.trim(),
+                precio_alquiler: document.getElementById('precio_alquiler').value.trim(),
+                condominio: document.getElementById('condominio').value.trim(),
+                ano_construccion: document.getElementById('ano_construccion').value.trim(),
+                hab: document.getElementById('hab').value,
+                banos: document.getElementById('banos').value,
+                bano_medio: banoMedioVal,
+                est: document.getElementById('est').value,
+                area_privada: document.getElementById('area_privada').value.trim(),
+                unidad_privada: document.getElementById('unidad_privada').value,
+                area_construida: document.getElementById('area_construida').value.trim(),
+                unidad_construida: document.getElementById('unidad_construida').value,
+                area_total: document.getElementById('area_total').value.trim(),
+                unidad_total: document.getElementById('unidad_total').value,
+                video: document.getElementById('video').value.trim(),
+                estado: document.getElementById('estado').value,
+                ciudad: document.getElementById('ciudad').value,
+                urbanizacion: document.getElementById('urbanizacion').value,
+                descripcion: document.getElementById('descripcion').value.trim().replace(/\n/g, ' '),
+                caracteristicas_internas: obtenerSeleccionados('feat_internas'),
+                caracteristicas_externas: obtenerSeleccionados('feat_externas'),
+                imagen: enlacesImagenes
+            };
+
+            const params = new URLSearchParams(payload);
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: params
+                });
+
+                alert(`¡Inmueble ${idFinal} guardado y publicado con éxito!`);
+                cambiarSeccion('listado');
+            } catch (err) {
+                console.error(err);
+                alert('Ocurrió un error al guardar en Google Sheets.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Guardar y Publicar Inmueble';
+            }
+        }
+
+        function filtrarTablaAdmin() {
+            const query = document.getElementById('buscar-tabla').value.toLowerCase().trim();
+            const filtrados = listaPropiedades.filter(p => 
+                (p.id && p.id.toLowerCase().includes(query)) || 
+                (p.titulo && p.titulo.toLowerCase().includes(query)) ||
+                (p.urbanizacion && p.urbanizacion.toLowerCase().includes(query))
+            );
+            renderTablaAdmin(filtrados);
+        }
+    </script>
+</body>
+</html>

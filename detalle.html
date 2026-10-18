@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ================= ETIQUETAS META SEO DINÁMICAS ================= -->
+    <title id="meta-title">Detalles del Inmueble | Ramos Inmobiliario</title>
+    <meta id="meta-description" name="description" content="Consulta los detalles completos, fotos, precio y ubicación de esta propiedad en Ramos Inmobiliario Caracas.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ramos-inmobiliario.vercel.app/">
+
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+    <meta id="og-title" property="og:title" content="Detalles del Inmueble | Ramos Inmobiliario">
+    <meta id="og-description" property="og:description" content="Explora las especificaciones completas de este inmueble en Caracas.">
+    <meta id="og-image" property="og:image" content="https://ramos-inmobiliario.vercel.app/logo.jpg">
+    <meta property="og:type" content="article">
+    <!-- ============================================================== -->
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcfbf9;
+            color: #292524;
+        }
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .bg-terracotta {
+            background-color: #ba8673;
+        }
+        .bg-terracotta:hover {
+            background-color: #a47361;
+        }
+        .text-terracotta {
+            color: #ba8673;
+        }
+        .custom-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#ba8673] selection:text-white flex flex-col min-h-screen">
+
+    <!-- Navegación Superior Minimalista (Se ocultará en modo cliente) -->
+    <nav id="navegacion-portal" class="bg-white sticky top-0 z-40 border-b border-stone-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                
+                <!-- Volver al Catálogo -->
+                <a href="index.html" class="flex items-center space-x-2 text-stone-700 hover:text-[#ba8673] text-[11px] font-bold tracking-widest uppercase transition">
+                    <i class="fas fa-arrow-left text-xs"></i>
+                    <span>VOLVER AL CATÁLOGO</span>
+                </a>
+
+                <!-- Logo Central -->
+                <a href="index.html" class="flex items-center">
+                    <h2 class="font-serif-title text-xl font-bold text-stone-900 tracking-tight">Ramos Inmobiliario</h2>
+                </a>
+
+                <!-- Botón Contacto -->
+                <div>
+                    <a href="https://wa.me/584142471765" target="_blank" class="bg-terracotta text-white text-[10px] tracking-[0.15em] uppercase font-bold px-6 py-2.5 rounded-full transition duration-300 shadow-sm">
+                        CONTACTO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Carga -->
+        <div id="loading-container" class="text-center py-24">
+            <i class="fas fa-spinner fa-spin text-3xl text-[#ba8673] mb-3"></i>
+            <p class="text-xs uppercase tracking-widest text-stone-400">Cargando información completa del inmueble...</p>
+        </div>
+
+        <div id="detalle-container" class="hidden space-y-10">
+            
+            <!-- TÍTULO PRINCIPAL SERIF -->
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 id="det-titulo" class="font-serif-title text-2xl sm:text-3xl font-semibold text-[#ba8673] tracking-wide leading-tight">
+                    Cargando título del inmueble...
+                </h1>
+            </div>
+
+            <!-- SECCIÓN 1: CARRUSEL (IZQUIERDA) + CUADRO LATERAL DE DETALLES (DERECHA) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Columna Izquierda: Código Fuera + Visor de Fotos + Puntos -->
+                <div class="lg:col-span-7 space-y-3">
+                    
+                    <!-- CÓDIGO UBICADO FUERA Y ARRIBA DE LA IMAGEN -->
+                    <div class="flex items-center space-x-2 text-stone-800 text-xs sm:text-sm font-semibold tracking-wide">
+                        <i class="fas fa-qrcode text-stone-600 text-sm"></i>
+                        <span>Código: <strong id="det-codigo-foto" class="font-bold text-stone-900">COD-1059</strong></span>
+                    </div>
+
+                    <!-- Visor de Fotos -->
+                    <div class="relative h-[380px] sm:h-[460px] bg-stone-100 rounded-2xl overflow-hidden border border-stone-200/80 shadow-sm flex items-center justify-center group">
+                        
+                        <img id="imagen-principal" src="" alt="Vista Inmueble" 
+                             onclick="abrirModalZoom()" 
+                             class="max-w-full max-h-full object-contain cursor-pointer transition duration-300 group-hover:scale-105">
+                        
+                        <!-- Botón Zoom -->
+                        <button onclick="abrirModalZoom()" class="absolute bottom-4 right-4 bg-stone-700/80 hover:bg-stone-800 text-white text-[11px] font-medium px-3 py-1.5 rounded-lg backdrop-blur-md transition flex items-center space-x-1.5 shadow">
+                            <i class="fas fa-search-plus text-xs"></i>
+                            <span>Clic para Zoom</span>
+                        </button>
+
+                        <!-- Flechas -->
+                        <button onclick="cambiarImagenPrincipal(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-stone-800/60 hover:bg-stone-900 text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10 shadow">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                        </button>
+                        <button onclick="cambiarImagenPrincipal(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-stone-800/60 hover:bg-stone-900 text-white w-10 h-10 rounded-full flex items-center justify-center transition z-10 shadow">
+                            <i class="fas fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Indicadores en Puntos -->
+                    <div id="puntos-galeria" class="flex justify-center items-center space-x-2 py-2 overflow-x-auto custom-scroll">
+                        <!-- Generados por JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: CUADRO CON PRECIO EN COLOR TERRACOTA -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-sm space-y-6">
+                        
+                        <!-- Encabezado Ficha: Estado a la Izquierda y Bloque de Precio a la Derecha -->
+                        <div class="flex justify-between items-start border-b border-stone-100 pb-4">
+                            <div class="flex items-center space-x-2 font-bold text-emerald-600 tracking-wider text-[11px] uppercase pt-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                                <span id="det-estado-prop">PROPIEDAD ACTIVA</span>
+                            </div>
+                            
+                            <!-- BLOQUE DE PRECIO EN COLOR TERRACOTA #ba8673 -->
+                            <div class="text-right">
+                                <span id="det-precio-label" class="text-[#ba8673] font-bold text-xs block leading-tight mb-0.5">Precio de venta</span>
+                                <div id="det-precio-monto" class="font-serif-title text-3xl font-bold text-[#ba8673] tracking-tight leading-none">
+                                    US$180,000
+                                </div>
+                                <span class="text-stone-400 text-[11px] block leading-tight mt-1">Dólares Americanos</span>
+                            </div>
+                        </div>
+
+                        <!-- Grilla de Parámetros con Íconos Terracota -->
+                        <div class="grid grid-cols-2 gap-y-5 gap-x-6 text-xs">
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-handshake text-xs text-[#ba8673]"></i>
+                                    <span>OPERACIÓN:</span>
+                                </span>
+                                <span id="det-operacion" class="font-bold text-stone-800 text-sm">Venta</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-building text-xs text-[#ba8673]"></i>
+                                    <span>INMUEBLE:</span>
+                                </span>
+                                <span id="det-tipo" class="font-bold text-stone-800 text-sm">Apartamento</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-bed text-sm text-[#ba8673]"></i>
+                                    <span>HABITACIONES:</span>
+                                </span>
+                                <span id="det-hab-cuadro" class="font-bold text-stone-800 text-sm">0</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-bath text-sm text-[#ba8673]"></i>
+                                    <span>BAÑOS:</span>
+                                </span>
+                                <span id="det-banos-cuadro" class="font-bold text-stone-800 text-sm">0</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-car text-sm text-[#ba8673]"></i>
+                                    <span>ESTACIONAMIENTO:</span>
+                                </span>
+                                <span id="det-est-cuadro" class="font-bold text-stone-800 text-sm">0</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-ruler-combined text-xs text-[#ba8673]"></i>
+                                    <span>SUP. PRIVADA:</span>
+                                </span>
+                                <span id="det-sup-privada" class="font-bold text-stone-800 text-sm">0 m²</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-drafting-compass text-xs text-[#ba8673]"></i>
+                                    <span>ÁREA CONSTRUIDA:</span>
+                                </span>
+                                <span id="det-area-const" class="font-bold text-stone-800 text-sm">0 m²</span>
+                            </div>
+
+                            <div>
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-expand text-xs text-[#ba8673]"></i>
+                                    <span>ÁREA TOTAL:</span>
+                                </span>
+                                <span id="det-area-total" class="font-bold text-stone-800 text-sm">0 m²</span>
+                            </div>
+
+                            <div class="col-span-2">
+                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                    <i class="fas fa-location-dot text-xs text-[#ba8673]"></i>
+                                    <span>UBICACIÓN:</span>
+                                </span>
+                                <span id="det-ubicacion" class="font-bold text-stone-800 text-sm leading-snug">Caracas</span>
+                            </div>
+                        </div>
+
+                        <!-- Botón Consultar por WhatsApp Terracota (Se ocultará en modo cliente) -->
+                        <div id="bloque-whatsapp-contacto" class="pt-2">
+                            <a id="btn-whatsapp" href="#" target="_blank" class="w-full bg-terracotta text-white text-[11px] font-bold tracking-[0.12em] uppercase py-4 px-4 rounded-xl shadow-sm transition flex items-center justify-center space-x-2">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                                <span>CONSULTAR POR WHATSAPP</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECCIÓN 2: DESCRIPCIÓN PRIMERO Y LUEGO CARACTERÍSTICAS -->
+            <div class="space-y-6">
+                
+                <!-- DESCRIPCIÓN ADICIONAL -->
+                <div class="bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
+                    <div class="bg-[#ba8673] text-white px-6 py-3.5 flex items-center space-x-3 rounded-t-2xl">
+                        <i class="fas fa-align-left text-base"></i>
+                        <h3 class="font-bold text-xs sm:text-sm uppercase tracking-[0.15em]">DESCRIPCIÓN ADICIONAL</h3>
+                    </div>
+                    <div class="p-6">
+                        <div id="det-descripcion" class="text-stone-600 text-xs sm:text-sm leading-relaxed font-light space-y-3">
+                            Cargando descripción...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARACTERÍSTICAS INTERNAS -->
+                <div class="bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
+                    <div class="bg-[#ba8673] text-white px-6 py-3.5 flex items-center space-x-3 rounded-t-2xl">
+                        <i class="fas fa-check-circle text-base"></i>
+                        <h3 class="font-bold text-xs sm:text-sm uppercase tracking-[0.15em]">CARACTERÍSTICAS INTERNAS</h3>
+                    </div>
+                    <div id="list-internas" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-4 text-xs text-stone-700 font-normal">
+                        <span class="text-stone-400">Ninguna especificada.</span>
+                    </div>
+                </div>
+
+                <!-- CARACTERÍSTICAS EXTERNAS -->
+                <div class="bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
+                    <div class="bg-[#ba8673] text-white px-6 py-3.5 flex items-center space-x-3 rounded-t-2xl">
+                        <i class="fas fa-globe text-base"></i>
+                        <h3 class="font-bold text-xs sm:text-sm uppercase tracking-[0.15em]">CARACTERÍSTICAS EXTERNAS</h3>
+                    </div>
+                    <div id="list-externas" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-y-3 gap-x-4 text-xs text-stone-700 font-normal">
+                        <span class="text-stone-400">Ninguna especificada.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECCIÓN 3: RECORRIDO EN VIDEO -->
+            <div id="seccion-video" class="hidden bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden max-w-2xl mx-auto">
+                <div class="bg-[#ba8673] text-white px-6 py-3.5 flex items-center space-x-3 rounded-t-2xl">
+                    <i class="fas fa-video text-base"></i>
+                    <h3 class="font-bold text-xs sm:text-sm uppercase tracking-[0.15em]">RECORRIDO EN VIDEO</h3>
+                </div>
+
+                <div class="p-4 sm:p-6 bg-stone-900">
+                    <div class="relative w-full overflow-hidden rounded-xl shadow-lg flex items-center justify-center bg-black" style="min-height: 280px;">
+                        
+                        <!-- Si es iframe de YouTube -->
+                        <iframe id="video-iframe" class="absolute top-0 left-0 w-full h-full border-0 hidden" 
+                                src="" 
+                                title="Recorrido en Video de la Propiedad" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                        </iframe>
+
+                        <!-- Si es un archivo de video directo (MP4) -->
+                        <video id="video-nativoplayer" class="w-full max-h-[350px] object-contain rounded-lg hidden" controls controlsList="nodownload">
+                            Tu navegador no soporta la reproducción de video.
+                        </video>
+
+                        <!-- Respaldo por Error 153 de YouTube -->
+                        <div id="video-fallback-box" class="hidden text-center p-6 space-y-3">
+                            <i class="fab fa-youtube text-red-600 text-3xl"></i>
+                            <p class="text-stone-300 text-xs">Este video de YouTube tiene restricciones de reproducción externa.</p>
+                            <a id="btn-youtube-link" href="#" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-lg transition shadow">
+                                Abrir Video en YouTube
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ================= MODAL CON ZOOM LIGHTBOX ================= -->
+    <div id="modal-zoom" class="fixed inset-0 z-50 bg-black/95 hidden flex flex-col justify-between p-4 sm:p-6 backdrop-blur-md">
+        <!-- Barra Superior -->
+        <div class="flex justify-between items-center text-white text-xs">
+            <span id="zoom-contador" class="tracking-widest font-mono text-stone-400">1 / 1</span>
+            <button onclick="cerrarModalZoom()" class="bg-white/10 hover:bg-white/20 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fas fa-times text-base"></i>
+            </button>
+        </div>
+
+        <!-- Imagen Ampliada -->
+        <div class="relative flex-1 flex items-center justify-center overflow-hidden my-4">
+            <img id="zoom-imagen" src="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition duration-300 select-none">
+
+            <!-- Flechas Zoom -->
+            <button onclick="cambiarImagenZoom(-1)" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-11 h-11 rounded-full flex items-center justify-center transition border border-stone-700">
+                <i class="fas fa-chevron-left text-sm"></i>
+            </button>
+            <button onclick="cambiarImagenZoom(1)" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-11 h-11 rounded-full flex items-center justify-center transition border border-stone-700">
+                <i class="fas fa-chevron-right text-sm"></i>
+            </button>
+        </div>
+
+        <div class="text-center text-stone-400 text-[10px] uppercase tracking-widest">
+            Usa las flechas o presiona ESC para cerrar
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer-portal" class="bg-[#1c1917] text-stone-400 py-10 border-t border-stone-800 mt-16 text-center text-[10px] text-stone-500 tracking-[0.2em] uppercase">
+        &copy; 2026 Ramos Inmobiliario. Todos los derechos reservados.
+    </footer>
+
+    <!-- Lógica de Datos y Galería -->
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxd6u9xIKb87cO_mj1dHPX8g2eoPSyoRidywt6XvGk2BKUGYf1Ow9kh-XuFHUlq75Yl/exec';
+        
+        let listaFotos = [];
+        let fotoActualIndex = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const propertyId = urlParams.get('id');
+
+            // ================= MODO CLIENTE LIMPIO (WASI STYLE) =================
+            if (urlParams.get('modo') === 'cliente') {
+                // Ocultar barra superior de navegación y footer con datos del portal
+                const navPortal = document.getElementById('navegacion-portal');
+                if (navPortal) navPortal.style.display = 'none';
+
+                const footerPortal = document.getElementById('footer-portal');
+                if (footerPortal) footerPortal.style.display = 'none';
+
+                // Ocultar botón de contacto directo por WhatsApp personal
+                const bloqueWa = document.getElementById('bloque-whatsapp-contacto');
+                if (bloqueWa) bloqueWa.style.display = 'none';
+            }
+            // ====================================================================
+
+            if (!propertyId) {
+                document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">No se especificó un inmueble válido.</p>`;
+                return;
+            }
+
+            cargarDetalleInmueble(propertyId);
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') cerrarModalZoom();
+            if (document.getElementById('modal-zoom').classList.contains('hidden') === false) {
+                if (e.key === 'ArrowLeft') cambiarImagenZoom(-1);
+                if (e.key === 'ArrowRight') cambiarImagenZoom(1);
+            }
+        });
+
+        window.procesarDetalleSheets = function(data) {
+            if (Array.isArray(data)) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const propertyId = urlParams.get('id');
+
+                const propiedad = data.find(p => p.id && p.id.toString().trim().toUpperCase() === propertyId.toString().trim().toUpperCase());
+
+                if (propiedad) {
+                    renderDetalle(propiedad);
+                } else {
+                    document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">No se encontró el inmueble con código: ${propertyId}</p>`;
+                }
+            } else {
+                document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">Error al conectar con la base de datos.</p>`;
+            }
+        };
+
+        function cargarDetalleInmueble(id) {
+            const script = document.createElement('script');
+            script.src = `${WEB_APP_URL}?callback=procesarDetalleSheets&_=${new Date().getTime()}`;
+            script.onerror = function() {
+                document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">Error al conectar con el servidor.</p>`;
+            };
+            document.body.appendChild(script);
+        }
+
+        function formatearPrecio(val) {
+            if (!val) return 'Consultar';
+            let num = parseFloat(val.toString().replace(/[^0-9.]/g, ''));
+            if (isNaN(num)) return val;
+            return 'US$' + num.toLocaleString('en-US');
+        }
+
+        function formatearDescripcion(texto) {
+            if (!texto) return '<p class="text-stone-400">Sin descripción adicional disponible.</p>';
+            
+            let parrafos = texto.split(/\r?\n/);
+            
+            if (parrafos.length <= 1) {
+                let txtLimpio = texto
+                    .replace(/(Metraje:.*?)(2 Habitaciones|Habitaciones)/gi, '$1\n$2')
+                    .replace(/(Habitaciones.*?)(2 Baños|Baños)/gi, '$1\n$2')
+                    .replace(/(Baños.*?)(1 Puesto|Puesto)/gi, '$1\n$2')
+                    .replace(/(Puesto.*?)(1 Maletero|Maletero)/gi, '$1\n$2')
+                    .replace(/(Maletero.*?)(Ubicado en|Piso)/gi, '$1\n$2')
+                    .replace(/(Excelente Apartamento.*?)(el inmueble cuenta con|además de resaltar)/gi, '$1\n\n$2')
+                    .replace(/(Bondades del Inmueble:)/gi, '\n$1')
+                    .replace(/(Buena luz natural)/gi, '\n• $1')
+                    .replace(/(Dos ascensores operativos)/gi, '\n• $1')
+                    .replace(/(Areas Verdes)/gi, '\n• $1');
+                
+                parrafos = txtLimpio.split(/\r?\n/);
+            }
+
+            return parrafos
+                .map(p => p.trim())
+                .filter(Boolean)
+                .map(p => `<p class="mb-3 leading-relaxed">${p}</p>`)
+                .join('');
+        }
+
+        function renderDetalle(p) {
+            document.getElementById('loading-container').classList.add('hidden');
+            document.getElementById('detalle-container').classList.remove('hidden');
+
+            // ================= OPTIMIZACIÓN META SEO DINÁMICA =================
+            const tituloSeo = `${p.titulo || 'Inmueble'} (${p.id || ''}) | Ramos Inmobiliario`;
+            const ubicacionTextoSeo = [p.urbanizacion, p.ciudad].filter(Boolean).join(', ') || 'Caracas';
+            const descSeo = `${p.tipo || 'Inmueble'} en ${p.negocio || 'Venta'} ubicado en ${ubicacionTextoSeo}. ${p.hab || 0} Hab, ${p.banos || 0} Baños. Precio: ${formatearPrecio(p.precio || p.precio_alquiler)}. Contáctanos.`;
+
+            document.title = tituloSeo;
+            const metaTitleEl = document.getElementById('meta-title');
+            if (metaTitleEl) metaTitleEl.textContent = tituloSeo;
+
+            const metaDescEl = document.getElementById('meta-description');
+            if (metaDescEl) metaDescEl.setAttribute('content', descSeo);
+
+            const ogTitleEl = document.getElementById('og-title');
+            if (ogTitleEl) ogTitleEl.setAttribute('content', tituloSeo);
+
+            const ogDescEl = document.getElementById('og-description');
+            if (ogDescEl) ogDescEl.setAttribute('content', descSeo);
+            // =================================================================
+
+            document.getElementById('det-codigo-foto').textContent = p.id || 'N/A';
+            document.getElementById('det-titulo').textContent = p.titulo || 'Sin título';
+            document.getElementById('det-tipo').textContent = p.tipo || 'Apartamento';
+            
+            let negocio = (p.negocio || 'Venta').trim();
+            document.getElementById('det-operacion').textContent = negocio;
+
+            const esAlquiler = negocio.toLowerCase().includes('alquiler');
+            document.getElementById('det-precio-label').textContent = esAlquiler ? 'Precio de alquiler' : 'Precio de venta';
+            
+            let ubicacionTexto = [p.urbanizacion, p.ciudad, p.estado].filter(Boolean).join(', ') || 'Caracas, Venezuela';
+            document.getElementById('det-ubicacion').textContent = ubicacionTexto;
+
+            let rawPrecio = p.precio || p.precio_alquiler;
+            document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
+
+            let areaVal = p.area_total || p.area_privada || p.area_construida || '0';
+            document.getElementById('det-sup-privada').textContent = `${p.area_privada || areaVal} m²`;
+            document.getElementById('det-area-const').textContent = `${p.area_construida || areaVal} m²`;
+            document.getElementById('det-area-total').textContent = `${areaVal} m²`;
+
+            document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
+            
+            // LÓGICA DE MEDIO BAÑO
+            let totalBanos = p.banos || '0';
+            let medioBanoValor = (p.bano_medio || p.medio_bano || p.medioBano || p.half_bath || '').toString().trim();
+            let internasTexto = (p.caracteristicas_internas || '').toLowerCase();
+
+            let tieneMedioBano = ['sí', 'si', 's', 'true', '1', 'yes', 'medio baño', 'medio bano'].includes(medioBanoValor.toLowerCase()) || 
+                                 internasTexto.includes('medio baño') || internasTexto.includes('medio bano');
+
+            if (tieneMedioBano) {
+                document.getElementById('det-banos-cuadro').textContent = `${totalBanos} + 1/2 Baño`;
+            } else {
+                document.getElementById('det-banos-cuadro').textContent = totalBanos;
+            }
+
+            document.getElementById('det-est-cuadro').textContent = p.est || 0;
+
+            document.getElementById('det-descripcion').innerHTML = formatearDescripcion(p.descripcion);
+
+            const rawVideoUrl = (p.video || p.video_url || p.youtube || '').trim();
+            if (rawVideoUrl !== '') {
+                const iframeEl = document.getElementById('video-iframe');
+                const videoEl = document.getElementById('video-nativoplayer');
+                const fallbackEl = document.getElementById('video-fallback-box');
+
+                if (rawVideoUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
+                    videoEl.src = rawVideoUrl;
+                    videoEl.classList.remove('hidden');
+                    iframeEl.classList.add('hidden');
+                    fallbackEl.classList.add('hidden');
+                } else {
+                    let match = rawVideoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))([\w-]{11})/);
+                    if (match && match[1]) {
+                        iframeEl.src = `https://www.youtube-nocookie.com/embed/${match[1]}?enablejsapi=1`;
+                        iframeEl.classList.remove('hidden');
+                        videoEl.classList.add('hidden');
+                    } else {
+                        document.getElementById('btn-youtube-link').href = rawVideoUrl;
+                        fallbackEl.classList.remove('hidden');
+                    }
+                }
+                document.getElementById('seccion-video').classList.remove('hidden');
+            }
+
+            listaFotos = p.imagen ? p.imagen.split(',').map(img => img.trim()).filter(Boolean) : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'];
+            
+            // Asignar imagen principal para Open Graph (WhatsApp/Redes)
+            if (listaFotos.length > 0) {
+                const ogImgEl = document.getElementById('og-image');
+                if (ogImgEl) ogImgEl.setAttribute('content', listaFotos[0]);
+            }
+
+            fotoActualIndex = 0;
+            actualizarVisorFoto();
+            renderPuntosPaginacion();
+
+            const listInternas = document.getElementById('list-internas');
+            if (p.caracteristicas_internas) {
+                listInternas.innerHTML = '';
+                p.caracteristicas_internas.split(',').forEach(item => {
+                    listInternas.innerHTML += `<div class="flex items-center space-x-2"><span class="text-stone-400 font-light">✓</span><span>${item.trim()}</span></div>`;
+                });
+            }
+
+            const listExternas = document.getElementById('list-externas');
+            if (p.caracteristicas_externas) {
+                listExternas.innerHTML = '';
+                p.caracteristicas_externas.split(',').forEach(item => {
+                    listExternas.innerHTML += `<div class="flex items-center space-x-2"><span class="text-stone-400 font-light">✓</span><span>${item.trim()}</span></div>`;
+                });
+            }
+
+            const mensajeWa = encodeURIComponent(`Hola Edwin Ramos, estoy interesado en el inmueble con código ${p.id} (${p.titulo}). Deseo más información.`);
+            document.getElementById('btn-whatsapp').href = `https://wa.me/584142471765?text=${mensajeWa}`;
+        }
+
+        function actualizarVisorFoto() {
+            if (listaFotos.length === 0) return;
+            document.getElementById('imagen-principal').src = listaFotos[fotoActualIndex];
+            
+            const puntos = document.querySelectorAll('.punto-item');
+            puntos.forEach((pt, idx) => {
+                if (idx === fotoActualIndex) {
+                    pt.className = 'punto-item w-3.5 h-3.5 rounded-full bg-[#ba8673] cursor-pointer transition-all duration-200';
+                } else {
+                    pt.className = 'punto-item w-2.5 h-2.5 rounded-full bg-stone-300 hover:bg-stone-400 cursor-pointer transition-all duration-200';
+                }
+            });
+        }
+
+        function cambiarImagenPrincipal(direction) {
+            fotoActualIndex += direction;
+            if (fotoActualIndex >= listaFotos.length) fotoActualIndex = 0;
+            if (fotoActualIndex < 0) fotoActualIndex = listaFotos.length - 1;
+            actualizarVisorFoto();
+        }
+
+        function seleccionarFoto(index) {
+            fotoActualIndex = index;
+            actualizarVisorFoto();
+        }
+
+        function renderPuntosPaginacion() {
+            const container = document.getElementById('puntos-galeria');
+            container.innerHTML = '';
+
+            listaFotos.forEach((_, idx) => {
+                container.innerHTML += `<div onclick="seleccionarFoto(${idx})" class="punto-item"></div>`;
+            });
+            actualizarVisorFoto();
+        }
+
+        /* ZOOM MODAL LIGHTBOX */
+        function abrirModalZoom() {
+            if (listaFotos.length === 0) return;
+            document.getElementById('modal-zoom').classList.remove('hidden');
+            actualizarImagenZoom();
+        }
+
+        function cerrarModalZoom() {
+            document.getElementById('modal-zoom').classList.add('hidden');
+        }
+
+        function cambiarImagenZoom(direction) {
+            fotoActualIndex += direction;
+            if (fotoActualIndex >= listaFotos.length) fotoActualIndex = 0;
+            if (fotoActualIndex < 0) fotoActualIndex = listaFotos.length - 1;
+            actualizarVisorFoto();
+            actualizarImagenZoom();
+        }
+
+        function actualizarImagenZoom() {
+            document.getElementById('zoom-imagen').src = listaFotos.length > 0 ? listaFotos[fotoActualIndex] : '';
+            document.getElementById('zoom-contador').textContent = `${fotoActualIndex + 1} / ${listaFotos.length}`;
+        }
+    </script>
+</body>
+</html>
