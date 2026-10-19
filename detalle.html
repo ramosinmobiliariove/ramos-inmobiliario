@@ -13,10 +13,10 @@
     <meta name="robots" content="index, follow">
     <link id="canonical-url" rel="canonical" href="https://ramos-inmobiliario.vercel.app/">
 
-    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) - Vacío por defecto para que la tome dinámicamente -->
     <meta id="og-title" property="og:title" content="Detalles del Inmueble | Ramos Inmobiliario">
     <meta id="og-description" property="og:description" content="Explora las especificaciones completas de este inmueble en Caracas.">
-    <meta id="og-image" property="og:image" content="https://ramos-inmobiliario.vercel.app/logo.jpg">
+    <meta id="og-image" property="og:image" content="">
     <meta property="og:type" content="article">
     
     <!-- SCHEMA.ORG DATOS ESTRUCTURADOS PARA GOOGLE -->
@@ -507,7 +507,15 @@
             const ogDescEl = document.getElementById('og-description');
             if (ogDescEl) ogDescEl.setAttribute('content', descSeo);
 
-            // Inyección dinámicas de Schema.org JSON-LD para Google Search
+            // Obtener lista de fotos y asegurar la foto de portada para WhatsApp/Telegram
+            listaFotos = p.imagen ? p.imagen.split(',').map(img => img.trim()).filter(Boolean) : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'];
+            
+            if (listaFotos.length > 0) {
+                const ogImgEl = document.getElementById('og-image');
+                if (ogImgEl) ogImgEl.setAttribute('content', listaFotos[0]);
+            }
+
+            // Inyección dinámica de Schema.org JSON-LD para Google Search
             const schemaScript = document.getElementById('schema-seo-json');
             if (schemaScript) {
                 const schemaData = {
@@ -597,14 +605,6 @@
                     }
                 }
                 document.getElementById('seccion-video').classList.remove('hidden');
-            }
-
-            listaFotos = p.imagen ? p.imagen.split(',').map(img => img.trim()).filter(Boolean) : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'];
-            
-            // Asignar imagen principal para Open Graph (WhatsApp/Redes)
-            if (listaFotos.length > 0) {
-                const ogImgEl = document.getElementById('og-image');
-                if (ogImgEl) ogImgEl.setAttribute('content', listaFotos[0]);
             }
 
             fotoActualIndex = 0;
