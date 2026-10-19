@@ -11,13 +11,24 @@
 
     <meta id="meta-description" name="description" content="Consulta los detalles completos, fotos, precio y ubicación de esta propiedad en Ramos Inmobiliario Caracas.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://ramos-inmobiliario.vercel.app/">
+    <link id="canonical-url" rel="canonical" href="https://ramos-inmobiliario.vercel.app/">
 
     <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
     <meta id="og-title" property="og:title" content="Detalles del Inmueble | Ramos Inmobiliario">
     <meta id="og-description" property="og:description" content="Explora las especificaciones completas de este inmueble en Caracas.">
     <meta id="og-image" property="og:image" content="https://ramos-inmobiliario.vercel.app/logo.jpg">
     <meta property="og:type" content="article">
+    
+    <!-- SCHEMA.ORG DATOS ESTRUCTURADOS PARA GOOGLE -->
+    <script type="application/ld+json" id="schema-seo-json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "name": "Detalles del Inmueble | Ramos Inmobiliario",
+      "description": "Consulta los detalles completos de esta propiedad.",
+      "url": "https://ramos-inmobiliario.vercel.app/"
+    }
+    </script>
     <!-- ============================================================== -->
 
     <!-- Tailwind CSS CDN -->
@@ -478,6 +489,7 @@
             const tituloSeo = `${p.titulo || 'Inmueble'} (${p.id || ''}) | Ramos Inmobiliario`;
             const ubicacionTextoSeo = [p.urbanizacion, p.ciudad].filter(Boolean).join(', ') || 'Caracas';
             const descSeo = `${p.tipo || 'Inmueble'} en ${p.negocio || 'Venta'} ubicado en ${ubicacionTextoSeo}. ${p.hab || 0} Hab, ${p.banos || 0} Baños. Precio: ${formatearPrecio(p.precio || p.precio_alquiler)}. Contáctanos.`;
+            const currentFullUrl = window.location.href;
 
             document.title = tituloSeo;
             const metaTitleEl = document.getElementById('meta-title');
@@ -486,11 +498,39 @@
             const metaDescEl = document.getElementById('meta-description');
             if (metaDescEl) metaDescEl.setAttribute('content', descSeo);
 
+            const canonicalEl = document.getElementById('canonical-url');
+            if (canonicalEl) canonicalEl.setAttribute('href', currentFullUrl);
+
             const ogTitleEl = document.getElementById('og-title');
             if (ogTitleEl) ogTitleEl.setAttribute('content', tituloSeo);
 
             const ogDescEl = document.getElementById('og-description');
             if (ogDescEl) ogDescEl.setAttribute('content', descSeo);
+
+            // Inyección dinámicas de Schema.org JSON-LD para Google Search
+            const schemaScript = document.getElementById('schema-seo-json');
+            if (schemaScript) {
+                const schemaData = {
+                  "@context": "https://schema.org",
+                  "@type": "SingleFamilyResidence",
+                  "name": p.titulo || "Inmueble en Caracas",
+                  "description": descSeo,
+                  "url": currentFullUrl,
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": p.ciudad || "Caracas",
+                    "addressRegion": p.estado || "Distrito Capital",
+                    "addressCountry": "VE"
+                  },
+                  "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "USD",
+                    "price": parseFloat((p.precio || p.precio_alquiler || '0').toString().replace(/[^0-9.]/g, '')) || 0,
+                    "availability": "https://schema.org/InStock"
+                  }
+                };
+                schemaScript.textContent = JSON.stringify(schemaData);
+            }
             // =================================================================
 
             document.getElementById('det-codigo-foto').textContent = p.id || 'N/A';

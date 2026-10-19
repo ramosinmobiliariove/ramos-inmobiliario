@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
     <!-- Página Principal -->
     <url>
         <loc>https://ramos-inmobiliario.vercel.app/</loc>
@@ -7,11 +8,23 @@
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-    <!-- Catálogo de Propiedades -->
+
+    <!-- Ficha de Propiedad Destacada (COD-1051) -->
     <url>
-        <loc>https://ramos-inmobiliario.vercel.app/index.html#propiedades</loc>
+        <loc>https://ramos-inmobiliario.vercel.app/detalle.html?id=COD-1051</loc>
         <lastmod>2026-10-18</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
     </url>
+
+    <!-- Puedes ir agregando más inmuebles aquí conforme los vayas publicando -->
+    <!--
+    <url>
+        <loc>https://ramos-inmobiliario.vercel.app/detalle.html?id=COD-1052</loc>
+        <lastmod>2026-10-18</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    -->
+
 </urlset>
