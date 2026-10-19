@@ -1492,13 +1492,27 @@
             return Array.from(checkboxes).map(cb => cb.value).join(', ');
         }
 
-        async function guardarInmueble() {
-            let idFinal = document.getElementById('id').value.trim();
-            if (!esEdicion || !idFinal) {
-                let ultimo = parseInt(localStorage.getItem('ramos_ultimo_id')) || 1051;
-                idFinal = `COD-${ultimo}`;
-                localStorage.setItem('ramos_ultimo_id', ultimo + 1);
+       async function guardarInmueble() {
+        let idFinal = document.getElementById('id').value.trim();
+        
+        if (!esEdicion || !idFinal) {
+            let maxIdNum = 1050;
+            if (listaPropiedades && listaPropiedades.length > 0) {
+                listaPropiedades.forEach(p => {
+                    if (p.id && typeof p.id === 'string') {
+                        let match = p.id.match(/COD-(\d+)/i);
+                        if (match && match[1]) {
+                            let num = parseInt(match[1], 10);
+                            if (num > maxIdNum) {
+                                maxIdNum = num;
+                            }
+                        }
+                    }
+                });
             }
+            idFinal = `COD-${maxIdNum + 1}`;
+            document.getElementById('id').value = idFinal;
+        }
             const banoMedioVal = document.getElementById('bano_medio').checked ? 'Sí' : 'No';
 
             const payload = {
