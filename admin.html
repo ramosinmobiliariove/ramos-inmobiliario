@@ -1494,10 +1494,66 @@
 
         async function guardarInmueble() {
             let idFinal = document.getElementById('id').value.trim();
+            
+            // Si es un inmueble nuevo (no estamos editando o no tiene ID)
             if (!esEdicion || !idFinal) {
-                let ultimo = parseInt(localStorage.getItem('ramos_ultimo_id')) || 1051;
-                idFinal = `COD-${ultimo}`;
-                localStorage.setItem('ramos_ultimo_id', ultimo + 1);
+                let maxIdNum = 1050; // Base inicial si la tabla estuviera vacía
+                
+                if (listaPropiedades && listaPropiedades.length > 0) {
+                    listaPropiedades.forEach(p => {
+                        if (p.id && typeof p.id === 'string') {
+                            let match = p.id.match(/COD-(\d+)/i);
+                            if (match && match[1]) {
+                                let num = parseInt(match[1], 10);
+                                if (num > maxIdNum) {
+                                    maxIdNum = num;
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                idFinal = `COD-${maxIdNum + 1}`;
+            }
+
+            const banoMedioVal = document.getElementById('bano_medio').checked ? 'Sí' : 'No';
+
+            const payload = {
+                id: idFinal,
+                titulo: document.getElementById('titulo').value.trim(),
+                tipo: document.getElementById('tipo').value,
+                negocio: document.getElementById('negocio').value,
+                precio: document.getElementById('precio').value.trim(),
+                precio_alquiler: document.getElementById('precio_alquiler').value.trim(),
+                condominio: document.getElementById('condominio').value.trim(),
+                ano_construccion: document.getElementById('ano_construccion').value.trim(),
+                hab: document.getElementById('hab').value,
+                banos: document.getElementById('banos').value,
+                bano_medio: banoMedioVal,
+                est: document.getElementById('est').value,
+                area_privada: document.getElementById('area_privada').value.trim(),
+                unidad_privada: document.getElementById('unidad_privada').value,
+                area_construida: document.getElementById('area_construida').value.trim(),
+                unidad_construida: document.getElementById('unidad_construida').value,
+                area_total: document.getElementById('area_total').value.trim(),
+                unidad_total: document.getElementById('unidad_total').value,
+                estado: document.getElementById('estado').value,
+                ciudad: document.getElementById('ciudad').value,
+                urbanizacion: document.getElementById('urbanizacion').value,
+                descripcion: document.getElementById('descripcion').value.trim(),
+                caracteristicas_internas: obtenerSeleccionados('feat_internas'),
+                caracteristicas_externas: obtenerSeleccionados('feat_externas'),
+                imagen: listaUrlsActuales.join(', ')
+            };
+
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(payload) });
+                alert(`¡Inmueble ${idFinal} guardado con éxito!`);
+                cambiarSeccion('listado');
+            } catch (err) { 
+                alert('Error al guardar.'); 
+            }
+        }
             }
             const banoMedioVal = document.getElementById('bano_medio').checked ? 'Sí' : 'No';
 
