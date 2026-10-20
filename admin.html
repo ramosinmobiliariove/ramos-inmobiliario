@@ -1434,7 +1434,7 @@
             const etiquetaPrecio = (p.negocio || '').toLowerCase().includes('alquiler') ? 'Precio de alquiler' : 'Precio de venta';
             const areaVal = p.area_total || p.area_privada || p.area_construida || '0';
 
-            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link =====>\n${url}`;
+            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link==>\n${url}`;
 
             navigator.clipboard.writeText(textoMensaje).then(() => alert('¡Memoria descriptiva y Link Cliente copiados al portapapeles!'));
         }
@@ -1455,7 +1455,7 @@
             const etiquetaPrecio = (p.negocio || '').toLowerCase().includes('alquiler') ? 'Precio de alquiler' : 'Precio de venta';
             const areaVal = p.area_total || p.area_privada || p.area_construida || '0';
 
-            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link =====>\n${url}`;
+            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link==>\n${url}`;
 
             navigator.clipboard.writeText(textoMensaje).then(() => alert('¡Memoria descriptiva y Link Portal copiados al portapapeles!'));
         }
