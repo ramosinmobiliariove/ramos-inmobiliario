@@ -1279,6 +1279,8 @@
                 listaPropiedades = data;
                 renderTablaAdmin(listaPropiedades);
                 actualizarEstadisticas(listaPropiedades);
+            } else {
+                document.getElementById("tabla-inmuebles-body").innerHTML = `<tr><td colspan="6" class="p-8 text-center text-red-500">Error al procesar los datos del servidor.</td></tr>`;
             }
         };
 
