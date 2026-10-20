@@ -620,7 +620,12 @@
 
         window.procesarRespuestaSheets = function(data) {
             if (Array.isArray(data)) {
-                propiedades = data;
+                // Filtrar para ocultar los inmuebles inactivos
+                propiedades = data.filter(p => {
+                    let estado = (p.estado_portal || p.estado_inmueble || 'Activo').trim().toLowerCase();
+                    return estado !== 'inactivo';
+                });
+        
                 render(propiedades);
             } else {
                 document.getElementById("grid-properties").innerHTML = `<p class="col-span-full text-center text-red-500 text-xs uppercase tracking-widest py-12">Error al cargar datos.</p>`;

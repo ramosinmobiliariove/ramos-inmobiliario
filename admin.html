@@ -542,6 +542,7 @@
                                         <th class="p-4">Imagen</th>
                                         <th class="p-4">Código / Título</th>
                                         <th class="p-4">Operación / Tipo</th>
+                                        <th class="p-4">Estado</th>
                                         <th class="p-4">Precio</th>
                                         <th class="p-4 text-center">Acciones</th>
                                     </tr>
@@ -983,7 +984,7 @@
                                 <div class="section-header"><i class="fas fa-align-left"></i><span>Descripción del Inmueble</span></div>
                                 <textarea id="descripcion" rows="4" placeholder="Escribe aquí los detalles..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]"></textarea>
                             </div>
-
+				
                             <!-- CARACTERÍSTICAS INTERNAS Y EXTERNAS -->
                             <div class="space-y-3">
                                 <div class="section-header"><i class="fas fa-check-circle"></i><span>Características del Inmueble</span></div>
@@ -1155,8 +1156,22 @@
                             <div class="space-y-3">
                                 <div class="section-header"><i class="fas fa-images"></i><span>Imágenes y Multimedia</span></div>
                                 <input type="file" id="image-file-input" multiple accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#b58371] file:text-white" onchange="manejarSeleccionImagenes(event)">
-                                <div id="preview-imagenes-container" class="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3"></div>
+                                <div id="preview-imagenes-container" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 mt-3"></div>
                             </div>
+
+                            <!-- OBSERVACIONES PRIVADAS -->
+                            <div class="space-y-3">
+                               <div class="bg-emerald-700 text-white p-3 rounded-xl flex justify-between items-center text-xs font-bold uppercase tracking-wider">
+                                  <div class="flex items-center space-x-2">
+                                     <i class="fas fa-lock"></i>
+                                     <span>Observaciones <span class="font-normal text-[10px] text-emerald-100">(Información privada - No visible en portales ni cliente)</span></span>
+                                 </div>
+                             </div>
+
+                             <div class="p-3 border border-emerald-600/30 bg-emerald-50/20 rounded-xl">
+                                 <textarea id="observaciones_privadas" rows="3" placeholder="Información privada sobre el inmueble (ej. datos del propietario, llaves, comisión, etc.)" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-emerald-600"></textarea>
+                             </div>
+                         </div>
 
                             <div class="pt-4 text-center">
                                 <button type="submit" id="btn-submit" class="bg-[#b58371] hover:bg-[#a37260] text-white text-xs font-semibold tracking-[0.2em] uppercase px-8 py-3.5 rounded-xl shadow-md transition">
@@ -1285,7 +1300,7 @@
             document.getElementById('contador-resultados').textContent = `${data.length} encontrados`;
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">No hay inmuebles registrados.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">No hay inmuebles registrados.</td></tr>`;
                 return;
             }
 
@@ -1293,6 +1308,9 @@
                 const imagenes = p.imagen ? p.imagen.split(',').map(img => img.trim()).filter(Boolean) : [];
                 const portada = imagenes.length > 0 ? imagenes[0] : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=200&q=80';
                 const urlDetalle = `detalle.html?id=${encodeURIComponent(p.id)}`;
+        
+                // Determinar estado actual
+                const estadoActual = p.estado_portal || p.estado_inmueble || 'Activo';
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50/80 transition">
@@ -1305,7 +1323,28 @@
                             <span class="bg-slate-100 px-2 py-1 rounded font-bold text-[10px] uppercase">${p.negocio || 'N/A'}</span>
                             <span class="text-slate-500 block mt-1">${p.tipo || 'N/A'}</span>
                         </td>
-                        <td class="p-4 font-semibold text-slate-900">${p.precio || p.precio_alquiler || 'Consultar'}</td>
+                
+                        <!-- COLUMNA DESPLEGABLE DE ESTADO DIRECTO -->
+                        <td class="p-4">
+                            <select onchange="cambiarEstadoDirecto('${p.id}', this.value)" class="bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs font-semibold focus:outline-none focus:border-[#b58371]">
+                                <option value="Destacado" ${estadoActual === 'Destacado' ? 'selected' : ''}>Destacado</option>
+                                <option value="Activo" ${estadoActual === 'Activo' ? 'selected' : ''}>Activo</option>
+                                <option value="Inactivo" ${estadoActual === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
+                            </select>
+                        </td>
+
+                        <td class="p-4 font-semibold text-slate-900">
+                            ${
+                                (() => {
+                                    const monto = p.precio || p.precio_venta || p.precio_alquiler;
+                                    if (!monto || monto.toString().trim() === "" || monto.toString().toLowerCase() === "consultar") {
+                                        return 'Consultar';
+                                    }
+                                    let num = parseFloat(monto.toString().replace(/[^0-9.]/g, ''));
+                                    return !isNaN(num) && num > 0 ? 'US$' + num.toLocaleString('en-US') : monto;
+                                })()
+                            }
+                        </td>
                         <td class="p-4 text-center space-x-1">
                             <button onclick="copiarLinkCliente('${p.id}')" class="bg-emerald-600 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">Cliente</button>
                             <button onclick="copiarLinkPortal('${p.id}')" class="bg-slate-700 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">Portal</button>
@@ -1316,7 +1355,6 @@
                 `;
             });
         }
-
         function ejecutarFiltrosAvanzados() {
             const codigo = document.getElementById('filtro-codigo').value.toLowerCase().trim();
             const tipo = document.getElementById('filtro-tipo').value;
@@ -1402,6 +1440,7 @@
         function resetearFormulario() {
             document.getElementById('property-form').reset();
             document.getElementById('id').value = '';
+            document.getElementById('observaciones_privadas').value = '';
             listaUrlsActuales = [];
             esEdicion = false;
             document.getElementById('preview-imagenes-container').innerHTML = '';
@@ -1425,6 +1464,7 @@
             document.getElementById('ano_construccion').value = p.ano_construccion || '';
             document.getElementById('hab').value = p.hab || 0;
             document.getElementById('banos').value = p.banos || 0;
+            document.getElementById('observaciones_privadas').value = p.observaciones_privadas || p.observaciones || '';
             
             const bMedioVal = String(p.bano_medio || '').trim().toLowerCase();
             document.getElementById('bano_medio').checked = (bMedioVal === 'sí' || bMedioVal === '1' || bMedioVal === 'true');
@@ -1482,11 +1522,77 @@
         function renderizarPreviews() {
             const container = document.getElementById('preview-imagenes-container');
             container.innerHTML = '';
+    
             listaUrlsActuales.forEach((url, idx) => {
-                container.innerHTML += `<div class="relative h-20 bg-slate-100 rounded-lg overflow-hidden border"><img src="${url}" class="w-full h-full object-cover"></div>`;
+                const esPortada = idx === 0;
+                container.innerHTML += `
+                    <div class="relative group h-32 bg-slate-100 rounded-xl overflow-hidden border shadow-sm flex flex-col justify-between cursor-move"
+                         draggable="true"
+                         ondragstart="drag(event, ${idx})"
+                         ondragover="allowDrop(event)"
+                         ondrop="drop(event, ${idx})">
+                
+                        <img src="${url}" class="w-full h-20 object-cover pointer-events-none">
+                
+                        <!-- Etiqueta de Portada -->
+                        <div class="absolute top-1 left-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">
+                            ${esPortada ? '★ Portada' : `#${idx + 1}`}
+                        </div>
+
+                        <!-- Botones de Control (Mover izq/der y eliminar) -->
+                        <div class="bg-white p-1 flex justify-between items-center text-[10px] border-t border-slate-200">
+                            <button type="button" onclick="moverImagen(${idx}, -1)" ${idx === 0 ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-slate-700 hover:text-[#b58371] font-bold px-1"'}>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button type="button" onclick="eliminarImagenPreview(${idx})" class="text-red-500 hover:text-red-700 px-1" title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button type="button" onclick="moverImagen(${idx}, 1)" ${idx === listaUrlsActuales.length - 1 ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-slate-700 hover:text-[#b58371] font-bold px-1"'}>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
         }
 
+        function moverImagen(index, direccion) {
+            const nuevoIndice = index + direccion;
+            if (nuevoIndice < 0 || nuevoIndice >= listaUrlsActuales.length) return;
+    
+            const temp = listaUrlsActuales[index];
+            listaUrlsActuales[index] = listaUrlsActuales[nuevoIndice];
+            listaUrlsActuales[nuevoIndice] = temp;
+    
+            renderizarPreviews();
+        }
+
+        function eliminarImagenPreview(index) {
+            listaUrlsActuales.splice(index, 1);
+            renderizarPreviews();
+        }
+
+        // Funciones para Arrastrar y Soltar con el Mouse (Drag and Drop)
+        function drag(ev, index) {
+            ev.dataTransfer.setData("text/plain", index);
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev, indexDestino) {
+            ev.preventDefault();
+            const indexOrigen = parseInt(ev.dataTransfer.getData("text/plain"));
+    
+            if (isNaN(indexOrigen) || indexOrigen === indexDestino) return;
+    
+            // Extraer el elemento movido y reinsertarlo en la nueva posición
+            const [urlMovida] = listaUrlsActuales.splice(indexOrigen, 1);
+            listaUrlsActuales.splice(indexDestino, 0, urlMovida);
+    
+            renderizarPreviews();
+        }
         function obtenerSeleccionados(nameGroup) {
             const checkboxes = document.querySelectorAll(`input[name="${nameGroup}"]:checked`);
             return Array.from(checkboxes).map(cb => cb.value).join(', ');
@@ -1539,9 +1645,12 @@
                 ciudad: document.getElementById('ciudad').value,
                 urbanizacion: document.getElementById('urbanizacion').value,
                 descripcion: document.getElementById('descripcion').value.trim(),
-                caracteristicas_internas: obtenerSeleccionados('feat_internas'),
-                caracteristicas_externas: obtenerSeleccionados('feat_externas'),
-                imagen: listaUrlsActuales.join(', ')
+                // 👉 AGREGA ESTA LÍNEA AQUÍ:
+                observaciones_privadas: document.getElementById('observaciones_privadas').value.trim(),
+        
+               caracteristicas_internas: obtenerSeleccionados('feat_internas'),
+               caracteristicas_externas: obtenerSeleccionados('feat_externas'),
+               imagen: listaUrlsActuales.join(', ')
             };
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(payload) });
