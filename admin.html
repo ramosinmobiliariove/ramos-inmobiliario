@@ -1417,15 +1417,46 @@
         }
 
         function copiarLinkCliente(id) {
+            const p = listaPropiedades.find(item => item.id && item.id.toString().trim().toUpperCase() === id.toString().trim().toUpperCase());
             const url = `${window.location.origin}${window.location.pathname.replace('admin.html', '')}detalle.html?id=${encodeURIComponent(id)}&modo=cliente`;
-            navigator.clipboard.writeText(url).then(() => alert('¡Link Cliente copiado!'));
+            
+            if (!p) {
+                navigator.clipboard.writeText(url).then(() => alert('¡Link copiado!'));
+                return;
+            }
+
+            const precioVal = p.precio || p.precio_venta || p.precio_alquiler || 'Consultar';
+            let precioTexto = precioVal.toString().toLowerCase().includes('consultar') ? 'Consultar' : (precioVal.toString().startsWith('US$') ? precioVal : 'US$' + parseFloat(precioVal.toString().replace(/[^0-9.]/g, '') || 0).toLocaleString('en-US'));
+            if (precioTexto === 'US$0') precioTexto = 'Consultar';
+            
+            const etiquetaPrecio = (p.negocio || '').toLowerCase().includes('alquiler') ? 'Precio de alquiler' : 'Precio de venta';
+            const areaVal = p.area_total || p.area_privada || p.area_construida || '0';
+
+            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link =====>\n${url}`;
+
+            navigator.clipboard.writeText(textoMensaje).then(() => alert('¡Memoria descriptiva y Link Cliente copiados al portapapeles!'));
         }
 
         function copiarLinkPortal(id) {
+            const p = listaPropiedades.find(item => item.id && item.id.toString().trim().toUpperCase() === id.toString().trim().toUpperCase());
             const url = `${window.location.origin}${window.location.pathname.replace('admin.html', '')}detalle.html?id=${encodeURIComponent(id)}`;
-            navigator.clipboard.writeText(url).then(() => alert('¡Link Portal copiado!'));
-        }
+            
+            if (!p) {
+                navigator.clipboard.writeText(url).then(() => alert('¡Link copiado!'));
+                return;
+            }
 
+            const precioVal = p.precio || p.precio_venta || p.precio_alquiler || 'Consultar';
+            let precioTexto = precioVal.toString().toLowerCase().includes('consultar') ? 'Consultar' : (precioVal.toString().startsWith('US$') ? precioVal : 'US$' + parseFloat(precioVal.toString().replace(/[^0-9.]/g, '') || 0).toLocaleString('en-US'));
+            if (precioTexto === 'US$0') precioTexto = 'Consultar';
+            
+            const etiquetaPrecio = (p.negocio || '').toLowerCase().includes('alquiler') ? 'Precio de alquiler' : 'Precio de venta';
+            const areaVal = p.area_total || p.area_privada || p.area_construida || '0';
+
+            const textoMensaje = `${p.titulo || 'Inmueble'}:\n- ${etiquetaPrecio}: ${precioTexto}\n- ${areaVal} m²\n- ${p.hab || 0} Habitaciones\n- ${p.banos || 0} Baños\n- ${p.est || 0} Estacionamientos\n- Más información y fotos en el siguiente link =====>\n${url}`;
+
+            navigator.clipboard.writeText(textoMensaje).then(() => alert('¡Memoria descriptiva y Link Portal copiados al portapapeles!'));
+        }
         function cambiarSeccion(seccion) {
             if (seccion === 'listado') {
                 document.getElementById('seccion-listado').classList.remove('hidden');
