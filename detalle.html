@@ -545,16 +545,34 @@
             document.getElementById('det-titulo').textContent = p.titulo || 'Sin título';
             document.getElementById('det-tipo').textContent = p.tipo || 'Apartamento';
             
+            // CÓDIGO NUEVO Y CORREGIDO:
             let negocio = (p.negocio || 'Venta').trim();
             document.getElementById('det-operacion').textContent = negocio;
 
             const esAlquiler = negocio.toLowerCase().includes('alquiler');
+
+            // Asignar etiqueta ("Precio de alquiler" o "Precio de venta")
             document.getElementById('det-precio-label').textContent = esAlquiler ? 'Precio de alquiler' : 'Precio de venta';
-            
+
             let ubicacionTexto = [p.urbanizacion, p.ciudad, p.estado].filter(Boolean).join(', ') || 'Caracas, Venezuela';
             document.getElementById('det-ubicacion').textContent = ubicacionTexto;
 
-            let rawPrecio = p.precio || p.precio_alquiler;
+            // Lógica corregida
+            let rawPrecio = "";
+
+            if (esAlquiler) {
+            rawPrecio = p.precio_alquiler || p.precio || "";
+            } else {
+            rawPrecio = p.precio || p.precio_venta || p.precio_alquiler || "";
+            }
+
+            // Si rawPrecio contiene únicamente espacios o está vacío, asigna 'Consultar'
+            if (!rawPrecio || rawPrecio.toString().trim() === "") {
+            document.getElementById('det-precio-monto').textContent = 'Consultar';
+            } else {
+            document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
+            }
+
             document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
 
             let areaVal = p.area_total || p.area_privada || p.area_construida || '0';
