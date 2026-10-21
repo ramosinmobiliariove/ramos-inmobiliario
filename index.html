@@ -696,7 +696,7 @@
                 });
 
                 let ubicacionTexto = [p.urbanizacion, p.ciudad].filter(Boolean).join(', ') || 'Caracas';
-                let precioTexto = formatearPrecio(p.precio || p.precio_alquiler);
+                let precioTexto = formatearPrecio(p.precio || p.precio_venta || p.precio_alquiler);
                 let areaVal = p.area_total || p.area_privada || p.area_construida || '0';
 
                 // LÓGICA DE MEDIO BAÑO EN LA TARJETA
