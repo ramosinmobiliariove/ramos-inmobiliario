@@ -111,13 +111,13 @@
             </div>
         </div>
 
-        <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <aside class="lg:col-span-3 space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm text-center">
-                    <h3 class="font-bold text-slate-900 text-sm">Edwin Ramos</h3>
-                    <p class="text-[11px] text-slate-500 font-medium mb-4">Administrador Principal</p>
-                    <span class="text-emerald-600 font-bold text-xs flex items-center justify-center"><i class="fas fa-circle text-[7px] mr-1.5"></i> Sesión Segura</span>
-                </div>
+        <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <aside class="lg:col-span-2 space-y-4">
+                <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm text-center">
+                    <h3 class="font-bold text-slate-900 text-xs">Edwin Ramos</h3>
+                    <p class="text-[10px] text-slate-500 font-medium mb-2">Administrador Principal</p>
+                   <span class="text-emerald-600 font-bold text-[10px] flex items-center justify-center"><i class="fas fa-circle text-[6px] mr-1"></i> Sesión Segura</span>
+               </div>
 
                 <nav class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden text-xs">
                     <button onclick="cambiarSeccion('listado')" id="btn-menu-listado" class="w-full text-left px-5 py-3.5 font-bold flex items-center space-x-3 bg-slate-900 text-white transition">
@@ -129,7 +129,7 @@
                 </nav>
             </aside>
 
-            <main class="lg:col-span-9 space-y-6">
+            <main class="lg:col-span-10 space-y-6">
 
                 <!-- SECCIÓN 1: TABLA Y FILTROS AVANZADOS -->
                 <section id="seccion-listado" class="space-y-6">
@@ -1347,11 +1347,11 @@
                                 })()
                             }
                         </td>
-                        <td class="p-4 text-center space-x-1">
-                            <button onclick="copiarLinkCliente('${p.id}')" class="bg-emerald-600 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">Cliente</button>
-                            <button onclick="copiarLinkPortal('${p.id}')" class="bg-slate-700 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">Portal</button>
-                            <button onclick="editarPropiedad('${p.id}')" class="bg-amber-50 text-amber-600 p-2 rounded"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarPropiedad('${p.id}')" class="bg-red-50 text-red-600 p-2 rounded"><i class="fas fa-trash-alt"></i></button>
+                        <td class="p-3 text-center whitespace-nowrap space-x-1">
+                            <button onclick="copiarLinkCliente('${p.id}')" class="bg-emerald-600 text-white text-[10px] font-bold uppercase px-2.5 py-1.5 rounded-lg shadow-sm hover:bg-emerald-700 transition">Cliente</button>
+                            <button onclick="copiarLinkPortal('${p.id}')" class="bg-slate-700 text-white text-[10px] font-bold uppercase px-2.5 py-1.5 rounded-lg shadow-sm hover:bg-slate-800 transition">Portal</button>
+                            <button onclick="editarPropiedad('${p.id}')" class="bg-amber-50 text-amber-600 px-2.5 py-1.5 rounded-lg border border-amber-200 hover:bg-amber-100 transition" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarPropiedad('${p.id}')" class="bg-red-50 text-red-600 px-2.5 py-1.5 rounded-lg border border-red-200 hover:bg-red-100 transition" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                 `;
