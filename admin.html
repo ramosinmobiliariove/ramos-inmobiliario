@@ -250,6 +250,7 @@
                                     <option value="Colinas de Caicaguana">Colinas de Caicaguana</option>
                                     <option value="Colinas de La California">Colinas de La California</option>
                                     <option value="Colinas de La Tahona">Colinas de La Tahona</option>
+				    <option value="Colinas de La Lagunita">Colinas de La Lagunita</option>
                                     <option value="Colinas de las Acacias">Colinas de las Acacias</option>
                                     <option value="Colinas de Los Caobos">Colinas de Los Caobos</option>
                                     <option value="Colinas de Los Chaguaramos">Colinas de Los Chaguaramos</option>
@@ -748,6 +749,7 @@
                                             <option value="Colinas de Caicaguana">Colinas de Caicaguana</option>
                                             <option value="Colinas de La California">Colinas de La California</option>
                                             <option value="Colinas de La Tahona">Colinas de La Tahona</option>
+					    <option value="Colinas de La Lagunita">Colinas de La Lagunita</option>
                                             <option value="Colinas de las Acacias">Colinas de las Acacias</option>
                                             <option value="Colinas de Los Caobos">Colinas de Los Caobos</option>
                                             <option value="Colinas de Los Chaguaramos">Colinas de Los Chaguaramos</option>
@@ -1328,9 +1330,10 @@
                 
                         <!-- COLUMNA DESPLEGABLE DE ESTADO DIRECTO -->
                         <td class="p-4">
-                            <select onchange="actualizarEstadoInmueble('COD-1052', this.value)">
-                              <option value="Activo">Activo</option>
-                              <option value="Inactivo">Inactivo</option>
+                            <select onchange="cambiarEstadoDirecto('${p.id}', this.value)" class="bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs font-semibold focus:outline-none focus:border-[#b58371]">
+                                <option value="Destacado" ${estadoActual === 'Destacado' ? 'selected' : ''}>Destacado</option>
+                                <option value="Activo" ${estadoActual === 'Activo' ? 'selected' : ''}>Activo</option>
+                                <option value="Inactivo" ${estadoActual === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
                             </select>
                         </td>
 
