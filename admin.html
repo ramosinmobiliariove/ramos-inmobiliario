@@ -623,10 +623,27 @@
                                     <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Año Construcción</label>
                                     <input type="text" id="ano_construccion" placeholder="Ej. 2026" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1.5">Dormitorio(s)</label>
+				<div>
+                                    <!-- Selector dinámico para cambiar la etiqueta -->
+                                    <div class="flex justify-between items-center mb-1.5">
+                                        <select id="tipo-espacio-label" class="text-[10px] font-bold uppercase tracking-widest text-slate-600 bg-transparent border-none focus:outline-none cursor-pointer p-0">
+                                            <option value="DORMITORIO(S)">Dormitorio(s)</option>
+                                            <option value="CUBÍCULO(S)">Cubículo(s)</option>
+                                            <option value="OFICINA(S)">Oficina(s)</option>
+                                        </select>
+                                    </div>
                                     <select id="hab" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#b58371]">
-                                        <option value="0">Cualquiera</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></option><option value="5">5+</option><option value="6">6+</option><option value="7">7+</option><option value="8">8</option><option value="9">9+</option><option value="10">10+</option>
+                                        <option value="0">Cualquiera</option>
+                                        <option value="1">1+</option>
+                                        <option value="2">2+</option>
+                                        <option value="3">3+</option>
+                                        <option value="4">4+</option>
+                                        <option value="5">5+</option>
+                                        <option value="6">6+</option>
+                                        <option value="7">7+</option>
+                                        <option value="8">8+</option>
+                                        <option value="9">9+</option>
+                                        <option value="10">10+</option>
                                     </select>
                                 </div>
                                 <div>
@@ -1493,14 +1510,24 @@
             document.getElementById('titulo').value = p.titulo || '';
             document.getElementById('tipo').value = p.tipo || '';
             document.getElementById('negocio').value = p.negocio || '';
-            document.getElementById('precio').value = p.precio || '';
+    
+            // 👉 CORRECCIÓN AQUÍ: Cargar correctamente precio de venta y de alquiler por separado
+            document.getElementById('precio').value = p.precio || p.precio_venta || '';
             document.getElementById('precio_alquiler').value = p.precio_alquiler || '';
+    
             document.getElementById('condominio').value = p.condominio || '';
             document.getElementById('ano_construccion').value = p.ano_construccion || '';
+    
+            // Recuperar el tipo de espacio seleccionado previamente (si agregaste el selector dinámico)
+            const selectorEspacio = document.getElementById('tipo-espacio-label');
+            if (selectorEspacio) {
+                selectorEspacio.value = p.tipo_espacio_etiqueta || 'DORMITORIO(S)';
+            }
+    
             document.getElementById('hab').value = p.hab || 0;
             document.getElementById('banos').value = p.banos || 0;
             document.getElementById('observaciones_privadas').value = p.observaciones_privadas || p.observaciones || '';
-            
+    
             const bMedioVal = String(p.bano_medio || '').trim().toLowerCase();
             document.getElementById('bano_medio').checked = (bMedioVal === 'sí' || bMedioVal === '1' || bMedioVal === 'true');
 
@@ -1515,7 +1542,7 @@
             document.getElementById('ciudad').value = p.ciudad || 'Caracas';
             document.getElementById('urbanizacion').value = p.urbanizacion || '';
             document.getElementById('descripcion').value = p.descripcion || '';
-            
+    
             marcarValores('feat_internas', p.caracteristicas_internas || '', actualizarSeleccionInternas);
             marcarValores('feat_externas', p.caracteristicas_externas || '', actualizarSeleccionExternas);
 
