@@ -582,10 +582,20 @@
 
             document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
 	    
-           // 👉 ACTUALIZAR ETIQUETA DINÁMICA (Habitaciones / Cubículos / Oficinas)
+           // 👉 ACTUALIZAR ETIQUETA E ÍCONO DINÁMICO (Habitaciones / Cubículos / Oficinas)
             const etiquetaEspacio = p.tipo_espacio_etiqueta || 'DORMITORIO(S)';
+            
+            // Seleccionar el ícono correcto según la etiqueta
+            let iconoEspacio = 'fa-bed'; // Por defecto
+            const etUpper = etiquetaEspacio.toUpperCase();
+            if (etUpper.includes('CUBÍCULO') || etUpper.includes('CUBICULO')) {
+                iconoEspacio = 'fa-th-large';
+            } else if (etUpper.includes('OFICINA')) {
+                iconoEspacio = 'fa-briefcase';
+            }
+
             document.getElementById('label-espacio-dinamico').innerHTML = `
-                <i class="fas fa-door-open text-sm text-[#ba8673]"></i>
+                <i class="fas ${iconoEspacio} text-sm text-[#ba8673]"></i>
                 <span>${etiquetaEspacio}:</span>
             `;
             document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
