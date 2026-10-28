@@ -196,7 +196,7 @@
                             </div>
 
                             <div>
-                                <span class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
+                                <span id="label-espacio-dinamico" class="text-[#ba8673] font-bold text-[10px] uppercase tracking-wider flex items-center space-x-1.5 mb-1">
                                     <i class="fas fa-bed text-sm text-[#ba8673]"></i>
                                     <span>HABITACIONES:</span>
                                 </span>
@@ -581,6 +581,28 @@
             document.getElementById('det-area-total').textContent = `${areaVal} m²`;
 
             document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
+	    
+            // 👉 ACTUALIZAR ETIQUETA DINÁMICA (Habitaciones / Cubículos / Oficinas)
+            const etiquetaEspacio = p.tipo_espacio_etiqueta || 'DORMITORIO(S)';
+            document.getElementById('label-espacio-dinamico').innerHTML = `
+                <i class="fas fa-door-open text-sm text-[#ba8673]"></i>
+                <span>${etiquetaEspacio}:</span>
+            `;
+            document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
+
+            // 👉 LÓGICA CORREGIDA DE MEDIO BAÑO
+            let totalBanos = p.banos || '0';
+            let medioBanoValor = (p.bano_medio || p.medio_bano || '').toString().trim();
+            let internasTexto = (p.caracteristicas_internas || '').toLowerCase();
+
+            let tieneMedioBano = ['sí', 'si', 's', 'true', '1', 'yes', 'medio baño', 'medio bano'].includes(medioBanoValor.toLowerCase()) || 
+                                 internasTexto.includes('medio baño') || internasTexto.includes('medio bano');
+
+            if (tieneMedioBano) {
+                document.getElementById('det-banos-cuadro').textContent = `${totalBanos} + 1/2 Baño`;
+            } else {
+                document.getElementById('det-banos-cuadro').textContent = totalBanos;
+            }
             
             // LÓGICA DE MEDIO BAÑO
             let totalBanos = p.banos || '0';

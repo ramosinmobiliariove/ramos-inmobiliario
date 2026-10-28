@@ -1518,12 +1518,12 @@
             document.getElementById('condominio').value = p.condominio || '';
             document.getElementById('ano_construccion').value = p.ano_construccion || '';
     
-            // Recuperar el tipo de espacio seleccionado previamente (si agregaste el selector dinámico)
+            // Recuperar el tipo de espacio seleccionado previamente
             const selectorEspacio = document.getElementById('tipo-espacio-label');
             if (selectorEspacio) {
                 selectorEspacio.value = p.tipo_espacio_etiqueta || 'DORMITORIO(S)';
             }
-    
+                
             document.getElementById('hab').value = p.hab || 0;
             document.getElementById('banos').value = p.banos || 0;
             document.getElementById('observaciones_privadas').value = p.observaciones_privadas || p.observaciones || '';
@@ -1693,6 +1693,7 @@
                 precio_alquiler: document.getElementById('precio_alquiler').value.trim(),
                 condominio: document.getElementById('condominio').value.trim(),
                 ano_construccion: document.getElementById('ano_construccion').value.trim(),
+                tipo_espacio_etiqueta: document.getElementById('tipo-espacio-label').value,
                 hab: document.getElementById('hab').value,
                 banos: document.getElementById('banos').value,
                 bano_medio: banoMedioVal,
