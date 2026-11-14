@@ -1,310 +1,399 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Propuesta Inmobiliaria | Ramos Inmobiliario</title>
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --primary: #0f172a;
-      --accent: #16a34a;
-      --border: #e2e8f0;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 22px 16px;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 1.45rem;
-      letter-spacing: 0.4px;
-    }
-    header p {
-      font-size: 0.92rem;
-      color: #cbd5e1;
-      margin-top: 4px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 28px auto 48px;
-      padding: 0 16px;
-    }
-    .client-banner {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      font-size: 1rem;
-    }
-    .grid {
-      display: grid;
-      gap: 24px;
-    }
-    .property-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 8px;
-      padding: 12px;
-      background: #f1f5f9;
-    }
-    .gallery img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 8px;
-      background: #e2e8f0;
-    }
-    .card-body {
-      padding: 22px 24px;
-    }
-    .meta-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .zone {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-    .price {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .card-body h2 {
-      font-size: 1.25rem;
-      margin-bottom: 6px;
-    }
-    .specs {
-      font-size: 0.92rem;
-      color: var(--muted);
-      margin-bottom: 14px;
-      font-weight: 500;
-    }
-    .desc {
-      white-space: pre-line;
-      margin-bottom: 20px;
-      color: #334155;
-    }
-    .btn-wa {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .btn-wa:hover {
-      opacity: 0.92;
-    }
-    .state-msg {
-      text-align: center;
-      padding: 48px 16px;
-      color: var(--muted);
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      padding: 20px 16px 32px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Exclusiva | Ramos Inmobiliario</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fbfbfb;
+            color: #292524;
+        }
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .bg-marble-subtle {
+            background-color: #ffffff;
+            background-image: radial-gradient(#f0edea 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+        }
+        .hero-banner-luxury {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 248, 246, 0.98) 100%),
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>Ramos Inmobiliario</h1>
-    <p>Selección personalizada de propiedades</p>
-  </header>
+<body class="antialiased selection:bg-[#b58371] selection:text-white flex flex-col min-h-screen">
 
-  <div class="container">
-    <div id="client-banner" class="client-banner" style="display: none;"></div>
-    <div id="contenedor" class="grid">
-      <div class="state-msg">Cargando opciones seleccionadas...</div>
+    <!-- Topbar Fina y Minimalista -->
+    <div class="bg-[#1c1917] text-stone-300 text-[10px] tracking-[0.2em] uppercase py-2 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+            <div class="flex items-center space-x-6 font-light">
+                <span><i class="fas fa-phone-alt text-[#b58371] mr-2"></i> +58 414 2471765</span>
+                <span><i class="fas fa-envelope text-[#b58371] mr-2"></i> ramosinmobiiario.ve@gmail.com</span>
+            </div>
+            <div class="flex items-center space-x-6 font-light">
+                <span><i class="fas fa-location-dot text-[#b58371] mr-2"></i> Caracas, Venezuela</span>
+                <a href="https://wa.me/584142471765" target="_blank" rel="noopener" class="text-emerald-400 hover:text-emerald-300 transition">
+                    <i class="fab fa-whatsapp text-sm"></i> Soporte VIP
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <footer>
-    Ramos Inmobiliario · Asesoría y Gestión Inmobiliaria
-  </footer>
+    <!-- Navegación Principal -->
+    <nav class="bg-marble-subtle sticky top-0 z-40 border-b border-stone-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center group py-1">
+                    <img src="logo.jpg" alt="Ramos Inmobiliario" class="h-16 w-auto object-contain transition duration-300 group-hover:scale-105 rounded-md shadow-sm border border-stone-100">
+                </a>
 
-  <script>
-    // Reemplaza con tu número de WhatsApp en formato internacional (sin + ni espacios, ej. 584142471765)
-    const TU_WHATSAPP = '584142471765';
-
-    // CSV publicado de la pestaña "Propuestas"
-    const SHEET_CSV_URL =
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgK31YP_fXxV_MlJgHL-TCS8ebKvSxJbYRg8LGt7nk0oy3Re-1AeKOc8M8LPAg2Al6U19NItd-K2_B/pub?gid=1855578866&single=true&output=csv';
-
-    function parseCSV(text) {
-      const rows = [];
-      let current = [];
-      let value = '';
-      let inQuotes = false;
-
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        const next = text[i + 1];
-
-        if (ch === '"' && inQuotes && next === '"') {
-          value += '"';
-          i++;
-        } else if (ch === '"') {
-          inQuotes = !inQuotes;
-        } else if (ch === ',' && !inQuotes) {
-          current.push(value);
-          value = '';
-        } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
-          if (value !== '' || current.length) {
-            current.push(value);
-            rows.push(current);
-          }
-          current = [];
-          value = '';
-        } else {
-          value += ch;
-        }
-      }
-
-      if (value !== '' || current.length) {
-        current.push(value);
-        rows.push(current);
-      }
-      return rows;
-    }
-
-    function escapeHTML(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    async function cargarPropuesta() {
-      const params = new URLSearchParams(window.location.search);
-      const id = (params.get('id') || '').trim();
-      const contenedor = document.getElementById('contenedor');
-
-      if (!id) {
-        contenedor.innerHTML =
-          '<div class="state-msg">Enlace de propuesta no válido o incompleto.</div>';
-        return;
-      }
-
-      try {
-        const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
-        if (!res.ok) throw new Error('No se pudo leer la hoja');
-
-        const csv = await res.text();
-        const rows = parseCSV(csv).slice(1); // Omitir fila de cabeceras
-
-        // Filtra únicamente las filas del id_propuesta solicitado (Columna A).
-        // La Columna I (nota_privada) nunca se lee ni se renderiza al cliente.
-        const items = rows.filter((r) => (r[0] || '').trim() === id);
-
-        if (!items.length) {
-          contenedor.innerHTML =
-            '<div class="state-msg">No se encontraron propiedades asociadas a este enlace.</div>';
-          return;
-        }
-
-        const nombreCliente = (items[0][1] || '').trim();
-        if (nombreCliente) {
-          const banner = document.getElementById('client-banner');
-          banner.style.display = 'block';
-          banner.innerHTML = `<strong>Propuesta preparada para:</strong> ${escapeHTML(nombreCliente)}`;
-        }
-
-        contenedor.innerHTML = items
-          .map((item) => {
-            const titulo = (item[2] || 'Inmueble seleccionado').trim();
-            const zona = (item[3] || '').trim();
-            const precio = (item[4] || 'Consultar precio').trim();
-            const detalles = (item[5] || '').trim();
-            const descripcion = (item[6] || '').trim();
-            const fotos = (item[7] || '')
-              .split(',')
-              .map((u) => u.trim())
-              .filter((u) => /^https?:\/\//i.test(u));
-
-            const fotosHtml = fotos.length
-              ? `<div class="gallery">${fotos
-                  .map(
-                    (f) =>
-                      `<img src="${escapeHTML(f)}" alt="${escapeHTML(titulo)}" loading="lazy" />`
-                  )
-                  .join('')}</div>`
-              : '';
-
-            const mensajeWa = encodeURIComponent(
-              `Hola, me interesa recibir más información sobre esta opción de tu propuesta: ${titulo}${zona ? ` (${zona})` : ''}.`
-            );
-
-            return `
-              <article class="property-card">
-                ${fotosHtml}
-                <div class="card-body">
-                  <div class="meta-top">
-                    <span class="zone">${escapeHTML(zona)}</span>
-                    <span class="price">${escapeHTML(precio)}</span>
-                  </div>
-                  <h2>${escapeHTML(titulo)}</h2>
-                  ${detalles ? `<div class="specs">${escapeHTML(detalles)}</div>` : ''}
-                  ${descripcion ? `<p class="desc">${escapeHTML(descripcion)}</p>` : ''}
-                  <a
-                    class="btn-wa"
-                    href="https://wa.me/${encodeURIComponent(TU_WHATSAPP)}?text=${mensajeWa}"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Consultar esta opción por WhatsApp
-                  </a>
+                <!-- Etiqueta Central -->
+                <div class="hidden md:flex items-center space-x-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500">
+                    <span class="w-2 h-2 rounded-full bg-[#b58371]"></span>
+                    <span>Portafolio Privado de Opciones</span>
                 </div>
-              </article>
-            `;
-          })
-          .join('');
-      } catch (err) {
-        contenedor.innerHTML =
-          '<div class="state-msg">No fue posible cargar la propuesta en este momento. Intenta nuevamente en unos minutos.</div>';
-      }
-    }
 
-    cargarPropuesta();
-  </script>
+                <!-- Botón WhatsApp -->
+                <div>
+                    <a href="https://wa.me/584142471765?text=Hola,%20acabo%20de%20revisar%20la%20propuesta%20inmobiliaria%20que%20me%20enviaste" target="_blank" rel="noopener" class="bg-[#b58371] hover:bg-[#a37260] text-white text-[11px] tracking-[0.15em] uppercase font-medium px-5 py-2.5 rounded-full shadow-[0_4px_20px_rgba(181,131,113,0.3)] transition duration-300 flex items-center space-x-2">
+                        <i class="fab fa-whatsapp text-sm"></i>
+                        <span>Atención Privada</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado de Propuesta -->
+    <header class="hero-banner-luxury py-10 sm:py-12 px-4 sm:px-6 text-stone-900 border-b border-stone-200/60">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b58371] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] px-4 py-1.5 rounded-full border border-stone-100 inline-block mb-3">
+                Curaduría Exclusiva
+            </span>
+            <h1 id="titulo-propuesta" class="font-serif-title text-3xl sm:text-4xl font-normal leading-tight mb-2 tracking-tight text-stone-900">
+                Selección personalizada de <span class="italic font-light text-[#b58371]">propiedades</span>
+            </h1>
+            <p id="subtitulo-cliente" class="text-stone-600 text-xs sm:text-sm font-light max-w-xl mx-auto tracking-wide leading-relaxed">
+                Opciones filtradas especialmente según tus requerimientos en Caracas.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal de Opciones -->
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-14 flex-1 w-full">
+        <div id="grid-propuestas" class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="col-span-full text-center py-16">
+                <p class="text-stone-400 text-xs uppercase tracking-[0.2em]">Cargando selección personalizada...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox para ampliar fotografías -->
+    <div id="lightbox" onclick="cerrarLightbox()" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
+        <button onclick="cerrarLightbox()" class="absolute top-6 right-6 text-white/80 hover:text-white text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Vista ampliada" class="max-w-full max-h-[88vh] object-contain rounded-lg shadow-2xl">
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#1c1917] text-stone-400 py-12 border-t border-stone-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div>
+                <img src="logo.jpg" alt="Ramos Inmobiliario" class="h-16 w-auto mb-3 object-contain rounded-md border border-stone-800 shadow-sm">
+                <p class="text-xs text-stone-400 leading-relaxed font-light">
+                    Firma inmobiliaria orientada a brindar la mejor experiencia en compra, venta y alquiler de inmuebles selectos.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-serif-title text-xs font-semibold mb-3 tracking-wider uppercase">Contacto Directo</h4>
+                <ul class="space-y-2 text-xs font-light">
+                    <li class="flex items-center"><i class="fas fa-phone-alt text-[#b58371] mr-3"></i> +58 414 2471765</li>
+                    <li class="flex items-center"><i class="fab fa-whatsapp text-emerald-400 mr-3"></i> +58 414 2471765</li>
+                    <li class="flex items-center"><i class="fas fa-envelope text-[#b58371] mr-3"></i> ramosinmobiiario.ve@gmail.com</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-serif-title text-xs font-semibold mb-3 tracking-wider uppercase">Ubicación</h4>
+                <p class="text-xs text-stone-400 leading-relaxed font-light">
+                    Caracas, Venezuela.<br>
+                    Atención previa cita.
+                </p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-10 pt-6 border-t border-stone-800/80 text-center text-[10px] text-stone-500 tracking-[0.2em] uppercase">
+            &copy; 2026 Ramos Inmobiliario. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        const TU_WHATSAPP = '584142471765';
+        const SHEET_CSV_URL =
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgK31YP_fXxV_MlJgHL-TCS8ebKvSxJbYRg8LGt7nk0oy3Re-1AeKOc8M8LPAg2Al6U19NItd-K2_B/pub?gid=1855578866&single=true&output=csv';
+
+        function parseCSV(text) {
+            const rows = [];
+            let current = [];
+            let value = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+                const next = text[i + 1];
+
+                if (ch === '"' && inQuotes && next === '"') {
+                    value += '"';
+                    i++;
+                } else if (ch === '"') {
+                    inQuotes = !inQuotes;
+                } else if (ch === ',' && !inQuotes) {
+                    current.push(value);
+                    value = '';
+                } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+                    if (value !== '' || current.length) {
+                        current.push(value);
+                        rows.push(current);
+                    }
+                    current = [];
+                    value = '';
+                } else {
+                    value += ch;
+                }
+            }
+
+            if (value !== '' || current.length) {
+                current.push(value);
+                rows.push(current);
+            }
+            return rows;
+        }
+
+        function escapeHTML(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatearPrecio(val) {
+            if (!val) return 'Consultar';
+            const limpio = val.toString().trim();
+            if (/^\$|US\$|Bs/i.test(limpio)) return limpio;
+            const num = parseFloat(limpio.replace(/[^0-9.]/g, ''));
+            if (isNaN(num)) return limpio;
+            return 'US$' + num.toLocaleString('en-US');
+        }
+
+        function cambiarSlide(carouselId, direction, event) {
+            if (event) event.stopPropagation();
+            const items = document.querySelectorAll(`[class*="carousel-item-${carouselId}"]`);
+            if (items.length <= 1) return;
+
+            let currentIndex = 0;
+            items.forEach((item, idx) => {
+                if (item.classList.contains('opacity-100')) currentIndex = idx;
+            });
+
+            items[currentIndex].classList.remove('opacity-100', 'z-10');
+            items[currentIndex].classList.add('opacity-0', 'z-0');
+
+            let newIndex = currentIndex + direction;
+            if (newIndex >= items.length) newIndex = 0;
+            if (newIndex < 0) newIndex = items.length - 1;
+
+            items[newIndex].classList.remove('opacity-0', 'z-0');
+            items[newIndex].classList.add('opacity-100', 'z-10');
+
+            const container = document.getElementById(carouselId);
+            const indicator = container.querySelector('.indicator-text');
+            if (indicator) indicator.textContent = `${newIndex + 1} / ${items.length}`;
+        }
+
+        function abrirLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.classList.remove('hidden');
+            lb.classList.add('flex');
+        }
+
+        function cerrarLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.add('hidden');
+            lb.classList.remove('flex');
+        }
+
+        async function cargarPropuesta() {
+            const params = new URLSearchParams(window.location.search);
+            const id = (params.get('id') || '').trim();
+            const grid = document.getElementById('grid-propuestas');
+
+            if (!id) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl border border-stone-200/80 p-12 text-center shadow-sm">
+                        <p class="font-serif-title text-xl text-stone-800 mb-2">Enlace no válido</p>
+                        <p class="text-xs text-stone-500">Solicita a tu asesor de Ramos Inmobiliario el enlace personalizado de tu propuesta.</p>
+                    </div>`;
+                return;
+            }
+
+            try {
+                const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('Error de red');
+
+                const csv = await res.text();
+                const rows = parseCSV(csv).slice(1);
+
+                // Filtra solo las filas que coinciden con id_propuesta (Columna A).
+                // La Columna I (nota_privada) jamás se lee ni se expone en el cliente.
+                const items = rows.filter(r => (r[0] || '').trim() === id);
+
+                if (!items.length) {
+                    grid.innerHTML = `
+                        <div class="col-span-full bg-white rounded-2xl border border-stone-200/80 p-12 text-center shadow-sm">
+                            <p class="font-serif-title text-xl text-stone-800 mb-2">No se encontraron opciones</p>
+                            <p class="text-xs text-stone-500">Esta propuesta aún no tiene propiedades cargadas o el enlace ha expirado.</p>
+                        </div>`;
+                    return;
+                }
+
+                const cliente = (items[0][1] || '').trim();
+                if (cliente) {
+                    document.getElementById('titulo-propuesta').innerHTML =
+                        `Propuesta preparada para <span class="italic font-light text-[#b58371]">${escapeHTML(cliente)}</span>`;
+                    document.getElementById('subtitulo-cliente').textContent =
+                        `${items.length} ${items.length === 1 ? 'opción seleccionada' : 'opciones seleccionadas'} especialmente para ti en Caracas.`;
+                }
+
+                grid.innerHTML = items.map((item, idx) => {
+                    const titulo = (item[2] || 'Propiedad Seleccionada').trim();
+                    const zona = (item[3] || 'Caracas').trim();
+                    const precio = formatearPrecio(item[4]);
+                    const detalles = (item[5] || '').trim();
+                    const descripcion = (item[6] || '').trim();
+                    const fotos = (item[7] || '')
+                        .split(',')
+                        .map(u => u.trim())
+                        .filter(u => /^https?:\/\//i.test(u));
+
+                    const imagenes = fotos.length
+                        ? fotos
+                        : ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'];
+
+                    const carouselId = `prop-carousel-${idx}`;
+                    const slidesHtml = imagenes.map((img, i) => `
+                        <div class="carousel-item-${carouselId} absolute inset-0 w-full h-full transition-opacity duration-500 ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} bg-white flex items-center justify-center">
+                            <img
+                                src="${escapeHTML(img)}"
+                                alt="${escapeHTML(titulo)}"
+                                loading="lazy"
+                                onclick="abrirLightbox('${escapeHTML(img)}')"
+                                class="w-full h-full object-cover cursor-zoom-in"
+                            >
+                        </div>
+                    `).join('');
+
+                    const mensajeWa = encodeURIComponent(
+                        `Hola, acabo de revisar mi propuesta y me interesa agendar una visita o recibir más información sobre la Opción #${idx + 1}: ${titulo} (${zona}).`
+                    );
+
+                    return `
+                        <article class="bg-white rounded-2xl overflow-hidden border border-stone-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between group">
+                            <div>
+                                <!-- Carrusel de Fotos -->
+                                <div class="relative h-72 overflow-hidden bg-stone-100 border-b border-stone-100" id="${carouselId}">
+                                    ${slidesHtml}
+                                    ${imagenes.length > 1 ? `
+                                        <button onclick="cambiarSlide('${carouselId}', -1, event)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/75 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-20">
+                                            <i class="fas fa-chevron-left text-xs"></i>
+                                        </button>
+                                        <button onclick="cambiarSlide('${carouselId}', 1, event)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/75 text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-20">
+                                            <i class="fas fa-chevron-right text-xs"></i>
+                                        </button>
+                                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/55 backdrop-blur-sm text-white text-[9px] px-2.5 py-0.5 rounded-full z-20 pointer-events-none indicator-text tracking-widest">
+                                            1 / ${imagenes.length}
+                                        </div>
+                                    ` : ''}
+
+                                    <span class="absolute top-4 left-4 bg-[#1c1917]/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-[0.15em] px-3.5 py-1.5 rounded-lg z-20 shadow-sm">
+                                        Opción #${idx + 1}
+                                    </span>
+                                    <span class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md text-stone-700 text-[9px] font-semibold px-2.5 py-1 rounded-md z-20 shadow-sm pointer-events-none">
+                                        <i class="fas fa-expand text-[#b58371] mr-1"></i> Ampliar
+                                    </span>
+                                </div>
+
+                                <!-- Contenido de la Ficha -->
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between gap-2 mb-1.5">
+                                        <span class="text-[10px] font-bold text-[#b58371] uppercase tracking-[0.15em]">
+                                            <i class="fas fa-location-dot mr-1"></i> ${escapeHTML(zona)}
+                                        </span>
+                                        <span class="font-serif-title text-xl font-bold text-stone-900">
+                                            ${escapeHTML(precio)}
+                                        </span>
+                                    </div>
+
+                                    <h2 class="font-serif-title font-semibold text-lg text-stone-900 mb-3 leading-snug">
+                                        ${escapeHTML(titulo)}
+                                    </h2>
+
+                                    ${detalles ? `
+                                        <div class="py-2.5 px-3.5 mb-4 rounded-xl bg-[#faf8f6] border border-stone-200/70 text-stone-700 text-xs font-medium">
+                                            <i class="fas fa-sliders text-[#b58371] mr-2"></i>${escapeHTML(detalles)}
+                                        </div>
+                                    ` : ''}
+
+                                    ${descripcion ? `
+                                        <p class="text-stone-600 text-xs sm:text-sm font-light leading-relaxed whitespace-pre-line">
+                                            ${escapeHTML(descripcion)}
+                                        </p>
+                                    ` : ''}
+                                </div>
+                            </div>
+
+                            <!-- Acción Directa -->
+                            <div class="px-6 pb-6 pt-2">
+                                <a
+                                    href="https://wa.me/${TU_WHATSAPP}?text=${mensajeWa}"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="w-full bg-[#1c1917] hover:bg-[#b58371] text-white text-[11px] font-semibold tracking-[0.18em] uppercase py-3.5 px-5 rounded-xl shadow-sm transition duration-300 flex items-center justify-center space-x-2"
+                                >
+                                    <i class="fab fa-whatsapp text-base text-emerald-400"></i>
+                                    <span>Me interesa esta opción</span>
+                                </a>
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+            } catch (err) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white rounded-2xl border border-stone-200/80 p-12 text-center shadow-sm">
+                        <p class="text-stone-600 text-xs uppercase tracking-widest">No fue posible cargar la propuesta. Intenta recargar la página.</p>
+                    </div>`;
+            }
+        }
+
+        cargarPropuesta();
+    </script>
 </body>
 </html>
