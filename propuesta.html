@@ -16,7 +16,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -24,22 +24,31 @@
     header {
       background: var(--primary);
       color: #fff;
-      padding: 20px;
+      padding: 22px 16px;
       text-align: center;
     }
-    header h1 { font-size: 1.4rem; letter-spacing: 0.5px; }
-    header p { font-size: 0.9rem; color: #cbd5e1; margin-top: 4px; }
+    header h1 {
+      font-size: 1.45rem;
+      letter-spacing: 0.4px;
+    }
+    header p {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
     .container {
       max-width: 1000px;
-      margin: 28px auto;
+      margin: 28px auto 48px;
       padding: 0 16px;
     }
     .client-banner {
       background: var(--card);
       border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
       border-radius: 12px;
-      padding: 18px 22px;
+      padding: 16px 20px;
       margin-bottom: 24px;
+      font-size: 1rem;
     }
     .grid {
       display: grid;
@@ -50,7 +59,7 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
     }
     .gallery {
       display: grid;
@@ -64,10 +73,10 @@
       height: 220px;
       object-fit: cover;
       border-radius: 8px;
-      cursor: pointer;
+      background: #e2e8f0;
     }
     .card-body {
-      padding: 20px 24px;
+      padding: 22px 24px;
     }
     .meta-top {
       display: flex;
@@ -79,14 +88,19 @@
     }
     .zone {
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
     .price {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--primary);
+    }
+    .card-body h2 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
     }
     .specs {
       font-size: 0.92rem;
@@ -111,11 +125,22 @@
       font-weight: 600;
       font-size: 0.95rem;
     }
-    .btn-wa:hover { opacity: 0.92; }
+    .btn-wa:hover {
+      opacity: 0.92;
+    }
     .state-msg {
       text-align: center;
       padding: 48px 16px;
       color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding: 20px 16px 32px;
     }
   </style>
 </head>
@@ -126,63 +151,94 @@
   </header>
 
   <div class="container">
-    <div id="client-banner" class="client-banner" style="display:none;"></div>
+    <div id="client-banner" class="client-banner" style="display: none;"></div>
     <div id="contenedor" class="grid">
       <div class="state-msg">Cargando opciones seleccionadas...</div>
     </div>
   </div>
 
-  <script>
-    // Reemplaza este número con tu WhatsApp en formato internacional (ej. 584121234567)
-    const TU_WHATSAPP = '584120000000';
+  <footer>
+    Ramos Inmobiliario · Asesoría y Gestión Inmobiliaria
+  </footer>
 
-    // Pega aquí la URL de tu Google Sheet publicada como CSV o tu endpoint de lectura
-    // Ejemplo: 'https://docs.google.com/spreadsheets/d/TU_ID/gviz/tq?tqx=out:csv&sheet=Propuestas'
-    const SHEET_CSV_URL = '';
+  <script>
+    // Reemplaza con tu número de WhatsApp en formato internacional (sin + ni espacios, ej. 584142471765)
+    const TU_WHATSAPP = '584142471765';
+
+    // CSV publicado de la pestaña "Propuestas"
+    const SHEET_CSV_URL =
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgK31YP_fXxV_MlJgHL-TCS8ebKvSxJbYRg8LGt7nk0oy3Re-1AeKOc8M8LPAg2Al6U19NItd-K2_B/pub?gid=1855578866&single=true&output=csv';
 
     function parseCSV(text) {
       const rows = [];
-      let current = [], value = '', inQuotes = false;
+      let current = [];
+      let value = '';
+      let inQuotes = false;
+
       for (let i = 0; i < text.length; i++) {
-        const ch = text[i], next = text[i + 1];
-        if (ch === '"' && inQuotes && next === '"') { value += '"'; i++; }
-        else if (ch === '"') { inQuotes = !inQuotes; }
-        else if (ch === ',' && !inQuotes) { current.push(value); value = ''; }
-        else if ((ch === '\n' || ch === '\r') && !inQuotes) {
-          if (value !== '' || current.length) { current.push(value); rows.push(current); }
-          current = []; value = '';
-        } else { value += ch; }
+        const ch = text[i];
+        const next = text[i + 1];
+
+        if (ch === '"' && inQuotes && next === '"') {
+          value += '"';
+          i++;
+        } else if (ch === '"') {
+          inQuotes = !inQuotes;
+        } else if (ch === ',' && !inQuotes) {
+          current.push(value);
+          value = '';
+        } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+          if (value !== '' || current.length) {
+            current.push(value);
+            rows.push(current);
+          }
+          current = [];
+          value = '';
+        } else {
+          value += ch;
+        }
       }
-      if (value !== '' || current.length) { current.push(value); rows.push(current); }
+
+      if (value !== '' || current.length) {
+        current.push(value);
+        rows.push(current);
+      }
       return rows;
+    }
+
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
     async function cargarPropuesta() {
       const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      const id = (params.get('id') || '').trim();
       const contenedor = document.getElementById('contenedor');
 
       if (!id) {
-        contenedor.innerHTML = '<div class="state-msg">Enlace de propuesta no válido.</div>';
-        return;
-      }
-
-      if (!SHEET_CSV_URL) {
-        contenedor.innerHTML = '<div class="state-msg">Configura SHEET_CSV_URL en propuesta.html para conectar la pestaña Propuestas.</div>';
+        contenedor.innerHTML =
+          '<div class="state-msg">Enlace de propuesta no válido o incompleto.</div>';
         return;
       }
 
       try {
-        const res = await fetch(SHEET_CSV_URL);
-        const csv = await res.text();
-        const rows = parseCSV(csv).slice(1); // Omitir cabecera
+        const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error('No se pudo leer la hoja');
 
-        // Filtrar solo las filas de este cliente (Columna A = id_propuesta)
-        // Nota: Nunca leemos ni mostramos la Columna I (nota_privada)
-        const items = rows.filter(r => (r[0] || '').trim() === id.trim());
+        const csv = await res.text();
+        const rows = parseCSV(csv).slice(1); // Omitir fila de cabeceras
+
+        // Filtra únicamente las filas del id_propuesta solicitado (Columna A).
+        // La Columna I (nota_privada) nunca se lee ni se renderiza al cliente.
+        const items = rows.filter((r) => (r[0] || '').trim() === id);
 
         if (!items.length) {
-          contenedor.innerHTML = '<div class="state-msg">No se encontraron propiedades para este enlace.</div>';
+          contenedor.innerHTML =
+            '<div class="state-msg">No se encontraron propiedades asociadas a este enlace.</div>';
           return;
         }
 
@@ -190,48 +246,61 @@
         if (nombreCliente) {
           const banner = document.getElementById('client-banner');
           banner.style.display = 'block';
-          banner.innerHTML = `<strong>Propuesta preparada para:</strong> ${nombreCliente}`;
+          banner.innerHTML = `<strong>Propuesta preparada para:</strong> ${escapeHTML(nombreCliente)}`;
         }
 
-        contenedor.innerHTML = items.map(item => {
-          const titulo = item[2] || 'Inmueble seleccionado';
-          const zona = item[3] || '';
-          const precio = item[4] || 'Consultar';
-          const detalles = item[5] || '';
-          const descripcion = item[6] || '';
-          const fotos = (item[7] || '')
-            .split(',')
-            .map(u => u.trim())
-            .filter(Boolean);
+        contenedor.innerHTML = items
+          .map((item) => {
+            const titulo = (item[2] || 'Inmueble seleccionado').trim();
+            const zona = (item[3] || '').trim();
+            const precio = (item[4] || 'Consultar precio').trim();
+            const detalles = (item[5] || '').trim();
+            const descripcion = (item[6] || '').trim();
+            const fotos = (item[7] || '')
+              .split(',')
+              .map((u) => u.trim())
+              .filter((u) => /^https?:\/\//i.test(u));
 
-          const fotosHtml = fotos.length
-            ? `<div class="gallery">${fotos.map(f => `<img src="${f}" alt="${titulo}" loading="lazy">`).join('')}</div>`
-            : '';
+            const fotosHtml = fotos.length
+              ? `<div class="gallery">${fotos
+                  .map(
+                    (f) =>
+                      `<img src="${escapeHTML(f)}" alt="${escapeHTML(titulo)}" loading="lazy" />`
+                  )
+                  .join('')}</div>`
+              : '';
 
-          const mensajeWa = encodeURIComponent(
-            `Hola, me interesa recibir más información sobre esta opción de tu propuesta: ${titulo} (${zona}).`
-          );
+            const mensajeWa = encodeURIComponent(
+              `Hola, me interesa recibir más información sobre esta opción de tu propuesta: ${titulo}${zona ? ` (${zona})` : ''}.`
+            );
 
-          return `
-            <article class="property-card">
-              ${fotosHtml}
-              <div class="card-body">
-                <div class="meta-top">
-                  <span class="zone">${zona}</span>
-                  <span class="price">${precio}</span>
+            return `
+              <article class="property-card">
+                ${fotosHtml}
+                <div class="card-body">
+                  <div class="meta-top">
+                    <span class="zone">${escapeHTML(zona)}</span>
+                    <span class="price">${escapeHTML(precio)}</span>
+                  </div>
+                  <h2>${escapeHTML(titulo)}</h2>
+                  ${detalles ? `<div class="specs">${escapeHTML(detalles)}</div>` : ''}
+                  ${descripcion ? `<p class="desc">${escapeHTML(descripcion)}</p>` : ''}
+                  <a
+                    class="btn-wa"
+                    href="https://wa.me/${encodeURIComponent(TU_WHATSAPP)}?text=${mensajeWa}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Consultar esta opción por WhatsApp
+                  </a>
                 </div>
-                <h2>${titulo}</h2>
-                <div class="specs">${detalles}</div>
-                <p class="desc">${descripcion}</p>
-                <a class="btn-wa" href="https://wa.me/${TU_WHATSAPP}?text=${mensajeWa}" target="_blank" rel="noopener">
-                  Consultar esta opción por WhatsApp
-                </a>
-              </div>
-            </article>
-          `;
-        }).join('');
+              </article>
+            `;
+          })
+          .join('');
       } catch (err) {
-        contenedor.innerHTML = '<div class="state-msg">Error al cargar la propuesta. Intenta nuevamente más tarde.</div>';
+        contenedor.innerHTML =
+          '<div class="state-msg">No fue posible cargar la propuesta en este momento. Intenta nuevamente en unos minutos.</div>';
       }
     }
 
