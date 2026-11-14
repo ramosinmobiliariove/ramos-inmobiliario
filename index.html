@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramos Inmobiliario | Catálogo de Propiedades</title>
     <!-- Favicon / Logo en la pestaña -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
 
@@ -183,7 +182,6 @@
                         <label class="block text-[9px] font-bold uppercase tracking-[0.15em] text-stone-500 mb-1">Urbanización</label>
                         <select id="filter-urbanization" class="w-full bg-[#fcfbfb] border border-stone-200 rounded-lg p-2.5 text-xs font-normal focus:outline-none focus:border-[#b58371] transition">
                             <option value="">Todas las urbanizaciones</option>
-                            <option value="">Todas las urbanizaciones</option>
                             <option value="Alta Florida">Alta Florida</option>
                             <option value="Alta Vista">Alta Vista</option>
                             <option value="Altamira">Altamira</option>
@@ -227,7 +225,7 @@
                             <option value="Colinas de Caicaguana">Colinas de Caicaguana</option>
                             <option value="Colinas de La California">Colinas de La California</option>
                             <option value="Colinas de La Tahona">Colinas de La Tahona</option>
-			    <option value="Colinas de La Lagunita">Colinas de La Lagunita</option>
+                            <option value="Colinas de La Lagunita">Colinas de La Lagunita</option>
                             <option value="Colinas de las Acacias">Colinas de las Acacias</option>
                             <option value="Colinas de Los Caobos">Colinas de Los Caobos</option>
                             <option value="Colinas de Los Chaguaramos">Colinas de Los Chaguaramos</option>
@@ -612,7 +610,6 @@
     <!-- Lógica de Lectura y Renderizado -->
     <script>
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwfojHw3lwZ7Rynwba2hsYJxG8MJmJHxeVk9inmfy_4OsjpN46GuT-XQVR_tpqUETL6/exec';
-
         let propiedades = [];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -626,7 +623,7 @@
                     let estado = (p.estado_portal || p.estado_inmueble || 'Activo').trim().toLowerCase();
                     return estado !== 'inactivo';
                 });
-        
+
                 render(propiedades);
             } else {
                 document.getElementById("grid-properties").innerHTML = `<p class="col-span-full text-center text-red-500 text-xs uppercase tracking-widest py-12">Error al cargar datos.</p>`;

@@ -380,7 +380,7 @@
 
     <!-- Lógica de Datos y Galería -->
     <script>
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxd6u9xIKb87cO_mj1dHPX8g2eoPSyoRidywt6XvGk2BKUGYf1Ow9kh-XuFHUlq75Yl/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwfojHw3lwZ7Rynwba2hsYJxG8MJmJHxeVk9inmfy_4OsjpN46GuT-XQVR_tpqUETL6/exec';
         
         let listaFotos = [];
         let fotoActualIndex = 0;
@@ -423,14 +423,16 @@
         window.procesarDetalleSheets = function(data) {
             if (Array.isArray(data)) {
                 const urlParams = new URLSearchParams(window.location.search);
-                const propertyId = urlParams.get('id');
+                const propertyId = (urlParams.get('id') || '').trim().toUpperCase();
 
-                const propiedad = data.find(p => p.id && p.id.toString().trim().toUpperCase() === propertyId.toString().trim().toUpperCase());
+                const propiedad = propertyId
+                    ? data.find(p => p.id && p.id.toString().trim().toUpperCase() === propertyId)
+                    : null;
 
                 if (propiedad) {
                     renderDetalle(propiedad);
                 } else {
-                    document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">No se encontró el inmueble con código: ${propertyId}</p>`;
+                    document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">No se encontró el inmueble con código: ${propertyId || 'N/A'}</p>`;
                 }
             } else {
                 document.getElementById('loading-container').innerHTML = `<p class="text-red-500 text-xs uppercase tracking-widest">Error al conectar con la base de datos.</p>`;
@@ -518,9 +520,11 @@
             // Inyección dinámica de Schema.org JSON-LD para Google Search
             const schemaScript = document.getElementById('schema-seo-json');
             if (schemaScript) {
+                const rawPrecioSchema = p.precio || p.precio_alquiler || '';
+                const precioNumerico = parseFloat(rawPrecioSchema.toString().replace(/[^0-9.]/g, ''));
                 const schemaData = {
                   "@context": "https://schema.org",
-                  "@type": "SingleFamilyResidence",
+                  "@type": "RealEstateListing",
                   "name": p.titulo || "Inmueble en Caracas",
                   "description": descSeo,
                   "url": currentFullUrl,
@@ -529,14 +533,16 @@
                     "addressLocality": p.ciudad || "Caracas",
                     "addressRegion": p.estado || "Distrito Capital",
                     "addressCountry": "VE"
-                  },
-                  "offers": {
-                    "@type": "Offer",
-                    "priceCurrency": "USD",
-                    "price": parseFloat((p.precio || p.precio_alquiler || '0').toString().replace(/[^0-9.]/g, '')) || 0,
-                    "availability": "https://schema.org/InStock"
                   }
                 };
+                if (!isNaN(precioNumerico) && precioNumerico > 0) {
+                    schemaData.offers = {
+                        "@type": "Offer",
+                        "priceCurrency": "USD",
+                        "price": precioNumerico,
+                        "availability": "https://schema.org/InStock"
+                    };
+                }
                 schemaScript.textContent = JSON.stringify(schemaData);
             }
             // =================================================================
@@ -557,30 +563,28 @@
             let ubicacionTexto = [p.urbanizacion, p.ciudad, p.estado].filter(Boolean).join(', ') || 'Caracas, Venezuela';
             document.getElementById('det-ubicacion').textContent = ubicacionTexto;
 
-            // Lógica corregida
-            let rawPrecio = "";
+           // Lógica corregida
+           let rawPrecio = "";
 
-            if (esAlquiler) {
-            rawPrecio = p.precio_alquiler || p.precio || "";
-            } else {
-            rawPrecio = p.precio || p.precio_venta || p.precio_alquiler || "";
-            }
+           if (esAlquiler) {
+               rawPrecio = p.precio_alquiler || p.precio || "";
+           } else {
+               rawPrecio = p.precio || p.precio_venta || p.precio_alquiler || "";
+           }
 
-            // Si rawPrecio contiene únicamente espacios o está vacío, asigna 'Consultar'
-            if (!rawPrecio || rawPrecio.toString().trim() === "") {
-            document.getElementById('det-precio-monto').textContent = 'Consultar';
-            } else {
-            document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
-            }
+           // Si rawPrecio contiene únicamente espacios o está vacío, asigna 'Consultar'
+           if (!rawPrecio || rawPrecio.toString().trim() === "") {
+               document.getElementById('det-precio-monto').textContent = 'Consultar';
+           } else {
+               document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
+           }
 
-            document.getElementById('det-precio-monto').textContent = formatearPrecio(rawPrecio);
+           let areaVal = p.area_total || p.area_privada || p.area_construida || '0';
+           document.getElementById('det-sup-privada').textContent = `${p.area_privada || areaVal} m²`;
+           document.getElementById('det-area-const').textContent = `${p.area_construida || areaVal} m²`;
+           document.getElementById('det-area-total').textContent = `${areaVal} m²`;
 
-            let areaVal = p.area_total || p.area_privada || p.area_construida || '0';
-            document.getElementById('det-sup-privada').textContent = `${p.area_privada || areaVal} m²`;
-            document.getElementById('det-area-const').textContent = `${p.area_construida || areaVal} m²`;
-            document.getElementById('det-area-total').textContent = `${areaVal} m²`;
-
-            document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
+           document.getElementById('det-hab-cuadro').textContent = p.hab || 0;
 	    
            // 👉 ACTUALIZAR ETIQUETA E ÍCONO DINÁMICO (Habitaciones / Cubículos / Oficinas)
             const etiquetaEspacio = p.tipo_espacio_etiqueta || 'DORMITORIO(S)';
